@@ -29,11 +29,11 @@
         visualization found here: http://mbostock.github.com/d3/talk/20111116/iris-parallel.html
        */
 
-      var countries = ["USA", "GBR", "CAN"];
+      var countries = ["USA", "GBR","PAK","AFG","CAN","AUS","IRQ","POL","KOR","UKR","ITA","GEO","ESP","DNK","NLD"];
       var indicators = ["Military Spending","GDP","GNI","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
 
-      var margin = [80, 160, 200, 160];
-      var width  = 1280 - margin[1] - margin[3];
+      var margin = [190, 170, 50, 260];
+      var width  = 1480 - margin[1] - margin[3];
       var height = 800 - margin[0] - margin[2];
 
       var x = d3.scale.ordinal().domain(indicators).rangePoints([0, width]);
@@ -68,7 +68,7 @@
             .data(countries)
           .enter().append("svg:g")
             .attr("class", "legend")
-            .attr("transform", function(d, i) { return "translate(0," + (i * 20 + 584) + ")"; });
+            .attr("transform", function(d, i) { return "translate(1100," + (i * 20 + 50) + ")"; });
 
 
         // color lines in legend for each country
