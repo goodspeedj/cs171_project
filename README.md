@@ -1,4 +1,5 @@
 cs171_project
 =============
 
-CS171 Project 2 and 3
+Please note that to run this visualization locally you must run the Python SimpleHTTPServer:
+python -m SimpleHTTPServer 8888 &
