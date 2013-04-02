@@ -27,12 +27,12 @@ svg {
 }
 
 .foreground path.fade {
-  stroke: #000;
+  stroke: #000000;
   stroke-opacity: .05;
 }
 
 .legend {
-  font-size: 18px;
+  font-size: 14px;
   font-style: oblique;
 }
 
@@ -41,16 +41,30 @@ svg {
 }
 
 .USA {
-  stroke: #800;
+  stroke: #E41A1C;
 }
 
 .GBR {
-  stroke: #080;
+  stroke: #377EB8;
 }
 
 .CAN {
-  stroke: #008;
+  stroke: #4DAF4A;
 }
+
+.IRQ {
+  stroke: #984EA3;
+}
+
+.PAK {
+  stroke: #FF7F00;
+}
+
+.AUS {
+  stroke: #A65628;
+}
+
+
 
 .brush .extent {
   fill-opacity: .3;
@@ -72,7 +86,7 @@ svg {
 body {
   font: 300 36px "Helvetica Neue";
   height: 640px;
-  margin: 80px 160px 80px 160px;
+  margin: 20px;
   overflow: hidden;
   position: relative;
   width: 960px;
