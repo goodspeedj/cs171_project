@@ -134,7 +134,7 @@
         function dragend(d) {
           x.domain(indicators).rangePoints([0, w]);
           var t = d3.transition().duration(500);
-          t.selectAll(".trait").attr("transform", function(d) { return "translate(" + x(d) + ")"; });
+          t.selectAll(".indicators").attr("transform", function(d) { return "translate(" + x(d) + ")"; });
           t.selectAll(".foreground path").attr("d", path);
         }
       });
