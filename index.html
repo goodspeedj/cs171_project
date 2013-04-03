@@ -9,6 +9,7 @@
     <!-- D3 Libraries -->
     <script type="text/javascript" src="js/d3.v3.min.js"></script>
     <script type="text/javascript" src="js/d3.csv.js"></script>
+    <script type="text/javascript" src="js/divgrid.js"></script>
   </head>
   <body>
     <header>
@@ -21,6 +22,9 @@
         Devin Shackle - devinshackle@gmail.com
       </div>
     </header>
+
+    <!-- Place holder for detail table -->
+    <div id="grid"></div>
     
     <script type="text/javascript">
 
@@ -28,6 +32,8 @@
         The code below for the parallel coordinates graph is heavily based on the code for the Edgar Anderson's Iris
         visualization found here: http://mbostock.github.com/d3/talk/20111116/iris-parallel.html
        */
+
+      var data = "data/conflict.csv";
 
       var countries = ["USA", "GBR","PAK","AFG","CAN","AUS","IRQ","POL","KOR","UKR","ITA","GEO","ESP","DNK","NLD"];
       var indicators = ["GDP (Billions)","GNI (Billions)","Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
@@ -39,9 +45,9 @@
       var x = d3.scale.ordinal().domain(indicators).rangePoints([0, width]);
       var y = {};
 
-      var line = d3.svg.line(),
-          axis = d3.svg.axis().orient("left"),
-          foreground;
+      var line = d3.svg.line();
+      var axis = d3.svg.axis().orient("left");
+      var foreground;
 
       var svg = d3.select("body").append("svg:svg")
           .attr("width", width + margin[1] + margin[3])
@@ -49,19 +55,22 @@
         .append("svg:g")
           .attr("transform", "translate(" + margin[3] + "," + margin[0] + ")");
 
-      d3.csv("data/conflict.csv", function(conflicts) {
+      d3.csv(data, function(conflicts) {
 
         // Create a scale and brush for each economic indicator
         indicators.forEach(function(d) {
+
+          // scale
           y[d] = d3.scale.linear()
               .domain(d3.extent(conflicts, function(p) { return +p[d]; }))
               .range([height, 0]);
 
+          // brush
           y[d].brush = d3.svg.brush()
               .y(y[d])
               .on("brush", brush);
 
-       });
+        });
 
         // Add a legend for the countries being displayed
         var legend = svg.selectAll("g.legend")
@@ -80,7 +89,8 @@
         legend.append("svg:text")
             .attr("x", 12)
             .attr("dy", ".31em")
-            .text(function(d) { return "Country: " + d; });
+            .text(function(d) { return "Country: " + d; })
+            .on("click", detailTable);
 
         // Add foreground lines (the main lines in the visualization)
         foreground = svg.append("svg:g")
@@ -144,14 +154,28 @@
         return line(indicators.map(function(p) { return [x(p), y[p](d[p])]; }));
       }
 
+
       // Handles a brush event, toggling the display of foreground lines
       function brush() {
-        var actives = indicators.filter(function(p) { return !y[p].brush.empty(); }),
-            extents = actives.map(function(p) { return y[p].brush.extent(); });
+        var actives = indicators.filter(function(p) { return !y[p].brush.empty(); });
+        var extents = actives.map(function(p) { return y[p].brush.extent(); });
+
         foreground.classed("fade", function(d) {
           return !actives.every(function(p, i) {
             return extents[i][0] <= d[p] && d[p] <= extents[i][1];
           });
+        });
+      }
+
+      function detailTable() {
+
+        var grid = d3.divgrid();
+        var cols = grid.columns(["Country","Year","GDP","GNI"]);
+        d3.csv(data, function(d) {
+          indicators.map(function(p) { console.log(p.data); });
+          d3.select('#grid')
+            .datum(d)
+            .call(grid)
         });
       }
 
