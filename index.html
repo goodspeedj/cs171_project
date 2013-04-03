@@ -170,7 +170,7 @@
       function detailTable(d) {
 
         var grid = d3.divgrid();
-        var cols = grid.columns(["Country","Year","GDP","GNI"]);
+        var cols = grid.columns(["Country","Year","GDP","GNI","Military Spending","Inflation","Revenue","Cash Surplus","Unemployment Rate"]);
         var filterDat = [{}];
 
         d3.csv(data, function(dat) {
