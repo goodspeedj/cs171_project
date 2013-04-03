@@ -92,10 +92,10 @@
             .attr("class", function(d) { return d.Country_Code; });
 
         // Add a group element for each economic indicator
-        var g = svg.selectAll(".trait")
+        var g = svg.selectAll(".indicator")
             .data(indicators)
           .enter().append("svg:g")
-            .attr("class", "trait")
+            .attr("class", "indicator")
             .attr("transform", function(d) { return "translate(" + x(d) + ")"; })
             .call(d3.behavior.drag()
             .origin(function(d) { return {x: x(d)}; })
@@ -132,9 +132,9 @@
         }
 
         function dragend(d) {
-          x.domain(indicators).rangePoints([0, w]);
+          x.domain(indicators).rangePoints([0, width]);
           var t = d3.transition().duration(500);
-          t.selectAll(".indicators").attr("transform", function(d) { return "translate(" + x(d) + ")"; });
+          t.selectAll(".indicator").attr("transform", function(d) { return "translate(" + x(d) + ")"; });
           t.selectAll(".foreground path").attr("d", path);
         }
       });
