@@ -167,16 +167,30 @@
         });
       }
 
-      function detailTable() {
+      function detailTable(d) {
 
         var grid = d3.divgrid();
         var cols = grid.columns(["Country","Year","GDP","GNI"]);
-        d3.csv(data, function(d) {
-          indicators.map(function(p) { console.log(p.data); });
+        var filterDat = [{}];
+        d3.csv(data, function(dat) {
+          //console.log(d[0].Country);
+
+          for (var i = 0; i < dat.length; i++) {
+              //console.log(dat[i].Country);
+              if (dat[i].Country_Code == d) {
+                  filterDat[i] = dat[i];
+              }
+          }
+          console.log(filterDat);
+          console.log(dat);
+          
           d3.select('#grid')
-            .datum(d)
+            .datum(filterDat)
             .call(grid)
+
         });
+
+
       }
 
     </script>
