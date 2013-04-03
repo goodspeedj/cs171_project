@@ -172,25 +172,23 @@
         var grid = d3.divgrid();
         var cols = grid.columns(["Country","Year","GDP","GNI"]);
         var filterDat = [{}];
-        d3.csv(data, function(dat) {
-          //console.log(d[0].Country);
 
+        d3.csv(data, function(dat) {
+          var index = 0;
+
+          // extract out the records we want
           for (var i = 0; i < dat.length; i++) {
-              //console.log(dat[i].Country);
               if (dat[i].Country_Code == d) {
-                  filterDat[i] = dat[i];
+                  filterDat[index] = dat[i];
+                  index++;
               }
           }
-          console.log(filterDat);
-          console.log(dat);
           
           d3.select('#grid')
             .datum(filterDat)
             .call(grid)
 
         });
-
-
       }
 
     </script>
