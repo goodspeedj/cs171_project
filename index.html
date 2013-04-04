@@ -66,9 +66,12 @@
               .range([height, 0]);
 
           // brush
-          y[d].brush = d3.svg.brush()
+          y[d].brush = d3.svg.brush(conflicts)
               .y(y[d])
+              .on("brush", detailTable2(conflicts))
               .on("brush", brush);
+              //.on("brush", brush(conflicts));
+              //.on("brush", detailTable(conflicts));
 
         });
 
@@ -111,7 +114,8 @@
             .origin(function(d) { return {x: x(d)}; })
             .on("dragstart", dragstart)
             .on("drag", drag)
-            .on("dragend", dragend));
+            .on("dragend", dragend)
+            );
 
         // Add an axis and title
         g.append("svg:g")
@@ -130,10 +134,12 @@
             .attr("x", -8)
             .attr("width", 20);
 
+        // used for dragging y axis
         function dragstart(d) {
           i = indicators.indexOf(d);
         }
 
+        // used for dragging y axis
         function drag(d) {
           x.range()[i] = d3.event.x;
           indicators.sort(function(a, b) { return x(a) - x(b); });
@@ -141,6 +147,7 @@
           foreground.attr("d", path);
         }
 
+        // used for dragging y axis
         function dragend(d) {
           x.domain(indicators).rangePoints([0, width]);
           var t = d3.transition().duration(500);
@@ -151,32 +158,39 @@
 
       // Returns the path for a given data point
       function path(d) {
+        //console.log(d);
         return line(indicators.map(function(p) { return [x(p), y[p](d[p])]; }));
       }
 
 
       // Handles a brush event, toggling the display of foreground lines
-      function brush() {
+      function brush(dat) {
+
         var actives = indicators.filter(function(p) { return !y[p].brush.empty(); });
         var extents = actives.map(function(p) { return y[p].brush.extent(); });
 
         foreground.classed("fade", function(d) {
+          //console.log(d);
           return !actives.every(function(p, i) {
+            console.log(d);   // is this everything that fades to gray????   If so just need the oposite!!
             return extents[i][0] <= d[p] && d[p] <= extents[i][1];
           });
         });
       }
 
+
+      // Displays the detail table
       function detailTable(d) {
 
+        //console.log(d);
         var grid = d3.divgrid();
-        var cols = grid.columns(["Country","Year","GDP","GNI","Military Spending","Inflation","Revenue","Cash Surplus","Unemployment Rate"]);
+        var cols = grid.columns(["Country","Year","GDP","GNI"]);
         var filterDat = [{}];
 
         d3.csv(data, function(dat) {
           var index = 0;
 
-          // extract out the records we want
+          // extract out the records we want and put in new array
           for (var i = 0; i < dat.length; i++) {
               if (dat[i].Country_Code == d) {
                   filterDat[index] = dat[i];
@@ -184,11 +198,39 @@
               }
           }
           
+          // display the records from the new array
           d3.select('#grid')
             .datum(filterDat)
             .call(grid)
 
         });
+      }
+
+      // Displays the detail table
+      function detailTable2(data) {
+
+        console.log(data);
+        var grid = d3.divgrid();
+        var cols = grid.columns(["Country","Year","GDP","GNI"]);
+        var filterDat = [{}];
+
+        //d3.csv(data, function(dat) {
+          var index = 0;
+
+          // extract out the records we want and put in new array
+          //for (var i = 0; i < data.length; i++) {
+          //    if (data[i].Country_Code == d) {
+          //        filterDat[index] = data[i];
+          //        index++;
+          //    }
+          //}
+          
+          // display the records from the new array
+          d3.select('#grid')
+            .datum(data)
+            .call(grid)
+
+        //});
       }
 
     </script>

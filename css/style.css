@@ -28,12 +28,13 @@ svg {
   padding: 10px;
   font-family: serif;
   font-size: 13px;
+  width: 800px;
 }
 
 .row, .header, .cell { height: 18px; }
 .row, .header { clear: left; }
 .header { font-weight: bold; }
-.cell { float: left; overflow: hidden; white-space: nowrap; width: 100px; }
+.cell { float: left; overflow: hidden; white-space: nowrap; width: 150px; }
 .col-0 { width: 180px; }
 
 .foreground path {
