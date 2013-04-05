@@ -1,0 +1,257 @@
+#header {
+    font-size: 16px;
+    color: gray;
+    font-family: serif;
+}
+
+#name {
+    font-size: 14px;
+    color: gray;
+    font-family: serif;
+}
+
+#description {
+    font-size: 14px;
+    margin: 20px;
+    width: 500px;
+    position: absolute;
+    top: 47px;
+    left: 304px;
+}
+#description p {
+  height: 200px;
+  width: 500px;
+}
+
+#dropdown {
+  position: absolute;
+  height: 50px;
+  width: 496px;
+  font-size: 32px;
+  border-style: solid;
+  top: 10px; 
+  left: 324px;
+}
+
+svg {
+  font-size: 13px;
+}
+
+#grid {
+  position: absolute;
+  top: 69px;
+  border: 1px solid gray;
+  padding: 10px;
+  font-family: serif;
+  font-size: 13px;
+  height: 179px;
+  width: 279px;
+}
+
+#gridCountries {
+  height: 130px;
+  width: 70px;
+}
+
+#gridCountries img {
+  clear: left;
+  margin: -2px;
+  padding: 5px;
+}
+
+#gridTable {
+  position: absolute;
+  top: 8px;
+  left: 81px;
+  border: solid;
+  border-left: none;
+  height: 180px;
+  width: 207px;
+
+}
+
+img.active {
+  border: solid;
+  border-right:none;
+}
+
+img.inactive {
+  background-color: grey;
+  border-right: solid;
+}
+
+.row, .header, .cell { height: 18px; }
+.row, .header { clear: left; }
+.header { font-weight: bold; }
+.cell { float: left; overflow: hidden; white-space: nowrap; width: 100px; }
+.col-0 { width: 180px; }
+
+.foreground path {
+  fill: none;
+  stroke-opacity: .5;
+  stroke-width: 1.5px;
+}
+
+.foreground path.fade {
+  stroke: #000000;
+  stroke-opacity: .05;
+}
+
+.legend {
+  font-size: 14px;
+  font-style: oblique;
+}
+
+.legend line {
+  stroke-width: 2px;
+}
+
+.USA {
+  stroke: #E41A1C;
+}
+
+.GBR {
+  stroke: #377EB8;
+}
+
+.CAN {
+  stroke: #4DAF4A;
+}
+
+.IRQ {
+  stroke: #984EA3;
+}
+
+.PAK {
+  stroke: #FF7F00;
+}
+
+.AUS {
+  stroke: #A65628;
+}
+
+
+
+.brush .extent {
+  fill-opacity: .3;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+.axis line, .axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  text-shadow: 0 1px 0 #fff;
+  cursor: move;
+}
+
+body {
+  font: 300 36px "Helvetica Neue";
+  height: 640px;
+  margin: 20px;
+  overflow: hidden;
+  position: relative;
+  width: 960px;
+}
+
+a:link, a:visited {
+  color: #777;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #666;
+}
+
+blockquote {
+  margin: 0;
+}
+
+blockquote:before {
+  content: "â€œ";
+  position: absolute;
+  left: -.4em;
+}
+
+blockquote:after {
+  content: "â€";
+  position: absolute;
+}
+
+body > ul {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 64px;
+}
+
+h1, h2, h3 {
+  font-weight: inherit;
+  margin: 0;
+}
+
+h2, h3 {
+  text-align: right;
+  font-size: inherit;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+h2 {
+  font-size: 24px;
+  position: absolute;
+}
+
+h3 {
+  bottom: -20px;
+  font-size: 18px;
+}
+
+.invert {
+  background: #1f1f1f;
+  color: #dcdccc;
+}
+
+.invert h2, .invert h3 {
+  color: #7f9f7f;
+}
+
+.string, .regexp {
+  color: #f39;
+}
+
+.keyword {
+  color: #00c;
+}
+
+.comment {
+  color: #777;
+  font-style: oblique;
+}
+
+.number {
+  color: #369;
+}
+
+.class, .special {
+  color: #1181B8;
+}
+
+body > svg {
+  position: absolute;
+  top: 135px;
+  left: -200px;
+}
+
+#map img {
+  position: absolute;
+  top: 0px;
+  left: 850px;
+}

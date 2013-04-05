@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="css/mockup.css"/>
+    <title>CS171 Project II: Jim Goodspeed &amp; Devin Shackle</title>
+
+    <!-- D3 Libraries -->
+    <script type="text/javascript" src="js/d3.v3.min.js"></script>
+    <script type="text/javascript" src="js/d3.csv.js"></script>
+    <script type="text/javascript" src="js/divgrid.js"></script>
+  </head>
+  <body>
+    <header>
+      <div id="header">
+        CS 171/CSCI E-64: Visualization<br />
+        Project II
+      </div>
+      <div id="name">
+        James Goodspeed - jgoodsp@fas.harvard.edu<br />
+        Devin Shackle - devin.shackle@fas.harvard.edu
+      </div>
+    </header>
+
+    <!-- Place holder for detail table -->
+    <div id="grid">
+      <div id="gridCountries">
+        <img class="active" src="US-Icon.png" height="50" width="60">
+        <img class="inactive" src="Kuwait-Icon.png" height="50" width="60">
+        <img class="inactive" src="Iraq-Icon.png" height="50" width="60">
+      </div>
+      <div id="gridTable">
+        <span>United States</span>
+        <table>
+        <tr>
+        <td>GDP(bn)</td>
+        <td>300.4</td>
+        </tr>
+        <tr>
+        <td>Interest</td>
+        <td>3.4</td>
+        </tr>
+        <tr>
+        <td>Unempl(mn)</td>
+        <td>1.5</td>
+        </tr>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Place holder for conflict drop-down -->
+    <div id="dropdown">Persian Gulf War&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp^</div>
+
+    <!-- Place holder for selected conflict description -->
+    <div id="description"><p>The Gulf War (2 August 1990 – 28 February 1991), codenamed Operation Desert Storm (17 January 1991 – 28 February 1991) was a war waged by a U.N.-authorized Coalition force from 34 nations led by the United States, against Iraq in response to Iraq's invasion and annexation of Kuwait.</p></div>
+
+    <!-- Place holder for map -->
+    <div id="map">
+      <img src="http://i.imgur.com/W2QL9uV.jpg" width="400" height="300">
+    </div>
+
+    <script src="http://datamaps.github.com/scripts/datamaps-all.js"></script>
+    <script src="map.js"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36315921-1']);
+  _gaq.push(['_setDomainName', 'bl.ocks.org']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+      /*
+        The code below for the parallel coordinates graph is heavily based on the code for the Edgar Anderson's Iris
+        visualization found here: http://mbostock.github.com/d3/talk/20111116/iris-parallel.html
+       */
+
+      var data = "data/conflict.csv";
+
+      var countries = ["USA", "GBR","PAK","AFG","CAN","AUS","IRQ","POL","KOR","UKR","ITA","GEO","ESP","DNK","NLD"];
+      var indicators = ["GDP (Billions)","GNI (Billions)","Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
+
+      var margin = [190, 170, 50, 260];
+      var width  = 1480 - margin[1] - margin[3];
+      var height = 800 - margin[0] - margin[2];
+
+      var x = d3.scale.ordinal().domain(indicators).rangePoints([0, width]);
+      var y = {};
+
+      var line = d3.svg.line();
+      var axis = d3.svg.axis().orient("left");
+      var foreground;
+
+      var svg = d3.select("body").append("svg:svg")
+          .attr("width", width + margin[1] + margin[3])
+          .attr("height", height + margin[0] + margin[2])
+        .append("svg:g")
+          .attr("transform", "translate(" + margin[3] + "," + margin[0] + ")");
+
+      d3.csv(data, function(conflicts) {
+
+        // Create a scale and brush for each economic indicator
+        indicators.forEach(function(d) {
+
+          // scale
+          y[d] = d3.scale.linear()
+              .domain(d3.extent(conflicts, function(p) { return +p[d]; }))
+              .range([height, 0]);
+
+          // brush
+          y[d].brush = d3.svg.brush()
+              .y(y[d])
+              .on("brush", brush);
+
+        });
+
+        // Add a legend for the countries being displayed
+        var legend = svg.selectAll("g.legend")
+            .data(countries)
+          .enter().append("svg:g")
+            .attr("class", "legend")
+            .attr("transform", function(d, i) { return "translate(1100," + (i * 20 + 50) + ")"; });
+
+
+        // color lines in legend for each country
+        legend.append("svg:line")
+            .attr("class", String)
+            .attr("x2", 8);
+
+        // country names in the legend
+        legend.append("svg:text")
+            .attr("x", 12)
+            .attr("dy", ".31em")
+            .text(function(d) { return "Country: " + d; })
+            .on("click", detailTable);
+
+        // Add foreground lines (the main lines in the visualization)
+        foreground = svg.append("svg:g")
+            .attr("class", "foreground")
+          .selectAll("path")
+            .data(conflicts)
+          .enter().append("svg:path")
+            .attr("d", path)
+            .attr("class", function(d) { return d.Country_Code; });
+
+        // Add a group element for each economic indicator
+        var g = svg.selectAll(".indicator")
+            .data(indicators)
+          .enter().append("svg:g")
+            .attr("class", "indicator")
+            .attr("transform", function(d) { return "translate(" + x(d) + ")"; })
+            .call(d3.behavior.drag()
+            .origin(function(d) { return {x: x(d)}; })
+            .on("dragstart", dragstart)
+            .on("drag", drag)
+            .on("dragend", dragend));
+
+        // Add an axis and title
+        g.append("svg:g")
+            .attr("class", "axis")
+            .each(function(d) { d3.select(this).call(axis.scale(y[d])); })
+          .append("svg:text")
+            .attr("text-anchor", "middle")
+            .attr("y", -9)
+            .text(String);
+
+        // Add a brush for each axis
+        g.append("svg:g")
+            .attr("class", "brush")
+            .each(function(d) { d3.select(this).call(y[d].brush); })
+          .selectAll("rect")
+            .attr("x", -8)
+            .attr("width", 20);
+
+        function dragstart(d) {
+          i = indicators.indexOf(d);
+        }
+
+        function drag(d) {
+          x.range()[i] = d3.event.x;
+          indicators.sort(function(a, b) { return x(a) - x(b); });
+          g.attr("transform", function(d) { return "translate(" + x(d) + ")"; });
+          foreground.attr("d", path);
+        }
+
+        function dragend(d) {
+          x.domain(indicators).rangePoints([0, width]);
+          var t = d3.transition().duration(500);
+          t.selectAll(".indicator").attr("transform", function(d) { return "translate(" + x(d) + ")"; });
+          t.selectAll(".foreground path").attr("d", path);
+        }
+      });
+
+      // Returns the path for a given data point
+      function path(d) {
+        return line(indicators.map(function(p) { return [x(p), y[p](d[p])]; }));
+      }
+
+
+      // Handles a brush event, toggling the display of foreground lines
+      function brush() {
+        var actives = indicators.filter(function(p) { return !y[p].brush.empty(); });
+        var extents = actives.map(function(p) { return y[p].brush.extent(); });
+
+        foreground.classed("fade", function(d) {
+          return !actives.every(function(p, i) {
+            return extents[i][0] <= d[p] && d[p] <= extents[i][1];
+          });
+        });
+      }
+
+      function detailTable(d) {
+
+        var grid = d3.divgrid();
+        var cols = grid.columns(["Country","Year","GDP","GNI"]);
+        var filterDat = [{}];
+
+        d3.csv(data, function(dat) {
+          var index = 0;
+
+          // extract out the records we want
+          for (var i = 0; i < dat.length; i++) {
+              if (dat[i].Country_Code == d) {
+                  filterDat[index] = dat[i];
+                  index++;
+              }
+          }
+          
+          d3.select('#grid')
+            .datum(filterDat)
+            .call(grid)
+
+        });
+      }
+
+    </script>
+  </body>
+</html>
