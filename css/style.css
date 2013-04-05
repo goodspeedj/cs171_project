@@ -197,6 +197,12 @@ h3 {
 
 body > svg {
   position: absolute;
-  top: -80px;
-  left: -160px;
+  top: 135px;
+  left: -200px;
+}
+
+#map img {
+  position: absolute;
+  top: 0px;
+  left: 850px;
 }
