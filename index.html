@@ -69,24 +69,8 @@
           // brush
           y[d].brush = d3.svg.brush(conflicts)
               .y(y[d])
-              .on("brush", detailTable2(conflicts))
-              .on("brush", function(d) {
-                  //console.log(conflicts);
-                  var actives = indicators.filter(function(p) { return !y[p].brush.empty(); });
-                  var extents = actives.map(function(p) { return y[p].brush.extent(); });
-                  
-
-                  foreground.classed("fade", function(d, index) {
-                    //console.log(d);
-                    return !actives.every(function(p, i) {
-                      //console.log(record);
-                      //detailTable2(d);
-                      return extents[i][0] <= d[p] && d[p] <= extents[i][1];
-                      
-                    });
-                  });
-              });
-              //.on("brush", brush);
+              //.on("brush", detailTable2(conflicts))
+              .on("brush", brush);
               //.on("brush", brush(conflicts));
               //.on("brush", detailTable(conflicts));
 
@@ -119,7 +103,46 @@
             .data(conflicts)
           .enter().append("svg:path")
             .attr("d", path)
+
+            /*
+            .on("mouseover", function(d) {
+                //console.log(d);
+                //alert(d.Country);
+
+              var data = d.Key;
+
+              var grid = d3.select("#grid")
+                    .selectAll("p")
+                    .data(data)
+                  .enter().append("p")
+                    .text(d.Population);
+
+                //grid.exit().remove();
+
+                console.log(d.Key + " : " + d.Country + " : " + d.Year);
+
+                  //.text(function(d) { return "meh" + d } );
+                //var dataset = d;
+
+                //d3.select("#grid")
+                //    .append("p")
+                //      .text(function(d) { return d.Country_Code; });
+                
+
+                //var grid = d3.divgrid();
+                //var cols = grid.columns(["Country","Year","GDP","GNI"]);
+
+                //d3.select('#grid')
+                //  .data(d)
+                //  .call(grid)
+            })
+*/
+            .attr("d", path)
             .attr("class", function(d) { return d.Country_Code; });
+
+
+
+
 
         // Add a group element for each economic indicator
         var g = svg.selectAll(".indicator")
@@ -181,7 +204,7 @@
 
 
       // Handles a brush event, toggling the display of foreground lines
-      function brush(dat) {
+      function brush() {
 
         var actives = indicators.filter(function(p) { return !y[p].brush.empty(); });
         var extents = actives.map(function(p) { return y[p].brush.extent(); });
