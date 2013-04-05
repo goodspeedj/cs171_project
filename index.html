@@ -33,9 +33,10 @@
         visualization found here: http://mbostock.github.com/d3/talk/20111116/iris-parallel.html
        */
 
-      var data = "data/conflict.csv";
+      var data = "data/trunk.csv";
 
-      var countries = ["USA", "GBR","PAK","AFG","CAN","AUS","IRQ","POL","KOR","UKR","ITA","GEO","ESP","DNK","NLD"];
+      //var countries = ["USA", "GBR","PAK","AFG","CAN","AUS","IRQ","POL","KOR","UKR","ITA","GEO","ESP","DNK","NLD"];
+      var countries = ["USA","CAN"];
       var indicators = ["GDP (Billions)","GNI (Billions)","Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
 
       var margin = [190, 170, 50, 260];
@@ -69,7 +70,23 @@
           y[d].brush = d3.svg.brush(conflicts)
               .y(y[d])
               .on("brush", detailTable2(conflicts))
-              .on("brush", brush);
+              .on("brush", function(d) {
+                  //console.log(conflicts);
+                  var actives = indicators.filter(function(p) { return !y[p].brush.empty(); });
+                  var extents = actives.map(function(p) { return y[p].brush.extent(); });
+                  
+
+                  foreground.classed("fade", function(d, index) {
+                    //console.log(d);
+                    return !actives.every(function(p, i) {
+                      //console.log(record);
+                      //detailTable2(d);
+                      return extents[i][0] <= d[p] && d[p] <= extents[i][1];
+                      
+                    });
+                  });
+              });
+              //.on("brush", brush);
               //.on("brush", brush(conflicts));
               //.on("brush", detailTable(conflicts));
 
@@ -168,12 +185,16 @@
 
         var actives = indicators.filter(function(p) { return !y[p].brush.empty(); });
         var extents = actives.map(function(p) { return y[p].brush.extent(); });
+        
 
-        foreground.classed("fade", function(d) {
+        foreground.classed("fade", function(d, index) {
           //console.log(d);
           return !actives.every(function(p, i) {
-            console.log(d);   // is this everything that fades to gray????   If so just need the oposite!!
+            //console.log(record);
+                        
+            //detailTable2(d);
             return extents[i][0] <= d[p] && d[p] <= extents[i][1];
+            
           });
         });
       }
@@ -209,7 +230,7 @@
       // Displays the detail table
       function detailTable2(data) {
 
-        console.log(data);
+        //console.log(data);
         var grid = d3.divgrid();
         var cols = grid.columns(["Country","Year","GDP","GNI"]);
         var filterDat = [{}];
