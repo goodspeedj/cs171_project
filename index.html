@@ -313,11 +313,13 @@
 
 
         var grid = d3.divgrid();
-  d3.select("#grid")
-    .datum(data.slice(0,10))
-    .call(grid)
+        var cols = grid.columns(["Country","Year","GDP (Billions)", "GNI (Billions)", "Military Spending","Inflation","Revenue","Cash Surplus","Unemployment Rate"]);
+  
+        d3.select("#grid")
+          .datum(data.slice(0,10))
+          .call(grid)
 
-      }
+        }
 
 
 
