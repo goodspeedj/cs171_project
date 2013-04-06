@@ -9,19 +9,10 @@
     <!-- D3 Libraries -->
     <script type="text/javascript" src="js/d3.v3.min.js"></script>
     <script type="text/javascript" src="js/d3.csv.js"></script>
+
+    <!-- Library to render table -->
     <script type="text/javascript" src="js/divgrid.js"></script>
-    <style>
 
-
-.enter {
-  fill: green;
-}
-
-.update {
-  fill: #333;
-}
-
-</style>
   </head>
   <body>
     <header>
@@ -35,25 +26,29 @@
       </div>
     </header>
 
+    <!-- Place holder for the parallel coordinates graph -->
+    <div id="vis"></div>
+
     <!-- Place holder for detail table -->
     <div id="grid"></div>
     
     <script type="text/javascript">
 
       /*
-        The code below for the parallel coordinates graph is heavily based on the code for the Edgar Anderson's Iris
+        The code below for the parallel coordinates graph is based on the code for the Edgar Anderson's Iris
         visualization found here: http://mbostock.github.com/d3/talk/20111116/iris-parallel.html
        */
 
       var data = "data/conflict.csv";
 
       //var countries = ["USA", "GBR","PAK","AFG","CAN","AUS","IRQ","POL","KOR","UKR","ITA","GEO","ESP","DNK","NLD"];
-      var countries = ["USA","CAN"];
+      var countries = ["USA","CAN", "GBR"];
       var indicators = ["GDP (Billions)","GNI (Billions)","Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
 
-      var margin = [190, 170, 50, 260];
-      var width  = 1480 - margin[1] - margin[3];
-      var height = 800 - margin[0] - margin[2];
+      //var margin = [190, 170, 50, 260];
+      var margin = [60, 120, 60, 120];
+      var width  = 1024 - margin[1] - margin[3];
+      var height = 500 - margin[0] - margin[2];
 
       var x = d3.scale.ordinal().domain(indicators).rangePoints([0, width]);
       var y = {};
@@ -62,11 +57,13 @@
       var axis = d3.svg.axis().orient("left");
       var foreground;
 
-      var svg = d3.select("body").append("svg:svg")
+      var svg = d3.select("#vis").append("svg:svg")
           .attr("width", width + margin[1] + margin[3])
           .attr("height", height + margin[0] + margin[2])
         .append("svg:g")
-          .attr("transform", "translate(" + margin[3] + "," + margin[0] + ")");
+          .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
+
+
 
       d3.csv(data, function(conflicts) {
 
@@ -81,19 +78,16 @@
           // brush
           y[d].brush = d3.svg.brush(conflicts)
               .y(y[d])
-              //.on("brush", detailTable2(conflicts))
               .on("brush", brush);
-              //.on("brush", brush(conflicts));
-              //.on("brush", detailTable(conflicts));
-
         });
+
 
         // Add a legend for the countries being displayed
         var legend = svg.selectAll("g.legend")
             .data(countries)
           .enter().append("svg:g")
             .attr("class", "legend")
-            .attr("transform", function(d, i) { return "translate(1100," + (i * 20 + 50) + ")"; });
+            .attr("transform", function(d, i) { return "translate(850," + (i * 20 + 50) + ")"; });
 
 
         // color lines in legend for each country
@@ -101,12 +95,14 @@
             .attr("class", String)
             .attr("x2", 8);
 
+
         // country names in the legend
         legend.append("svg:text")
             .attr("x", 12)
             .attr("dy", ".31em")
             .text(function(d) { return "Country: " + d; })
-            .on("click", detailTable);
+            .on("click", detailTableFromLegend);
+
 
         // Add foreground lines (the main lines in the visualization)
         foreground = svg.append("svg:g")
@@ -115,45 +111,8 @@
             .data(conflicts)
           .enter().append("svg:path")
             .attr("d", path)
-
-            /*
-            .on("mouseover", function(d) {
-                //console.log(d);
-                //alert(d.Country);
-
-              var data = d.Key;
-
-              var grid = d3.select("#grid")
-                    .selectAll("p")
-                    .data(data)
-                  .enter().append("p")
-                    .text(d.Population);
-
-                //grid.exit().remove();
-
-                console.log(d.Key + " : " + d.Country + " : " + d.Year);
-
-                  //.text(function(d) { return "meh" + d } );
-                //var dataset = d;
-
-                //d3.select("#grid")
-                //    .append("p")
-                //      .text(function(d) { return d.Country_Code; });
-                
-
-                //var grid = d3.divgrid();
-                //var cols = grid.columns(["Country","Year","GDP","GNI"]);
-
-                //d3.select('#grid')
-                //  .data(d)
-                //  .call(grid)
-            })
-*/
             .attr("d", path)
             .attr("class", function(d) { return d.Country_Code; });
-
-
-
 
 
         // Add a group element for each economic indicator
@@ -169,6 +128,7 @@
             .on("dragend", dragend)
             );
 
+
         // Add an axis and title
         g.append("svg:g")
             .attr("class", "axis")
@@ -178,6 +138,7 @@
             .attr("y", -9)
             .text(String);
 
+
         // Add a brush for each axis
         g.append("svg:g")
             .attr("class", "brush")
@@ -186,10 +147,12 @@
             .attr("x", -8)
             .attr("width", 20);
 
+
         // used for dragging y axis
         function dragstart(d) {
           i = indicators.indexOf(d);
         }
+
 
         // used for dragging y axis
         function drag(d) {
@@ -199,6 +162,7 @@
           foreground.attr("d", path);
         }
 
+
         // used for dragging y axis
         function dragend(d) {
           x.domain(indicators).rangePoints([0, width]);
@@ -207,6 +171,7 @@
           t.selectAll(".foreground path").attr("d", path);
         }
       });
+
 
       // Returns the path for a given data point
       function path(d) {
@@ -223,24 +188,18 @@
         var filterData = new Array();
 
         foreground.classed("fade", function(d, index) {
-          //console.log(d);   // data for all records
-          //console.log("actives: " + actives);
-          //console.log("extents: " + extents);
-
 
           return !actives.every(function(p, i) {
-            //console.log("extents[i][0]: " + extents[i][0]);
-            //console.log("d[p]: " + d[p]);   // this is the value of the extent for the country record
-            //console.log("extents[i][1]: " + extents[i][1]);
 
-            // figuring this out made my brain hurt
+            // For records (lines) that are in the brush add to the filterData array
             if (extents[i][0] <= d[p] && d[p] <= extents[i][1]) {
-                //console.log("Record we need: " + d.Key + ": " + d.Country);
                 filterData.push(d);
                 
             }
-            //console.log(filterData.length);
-            detailTable2(filterData);
+
+            // Create the detail table based on the contents of the filterData array
+            detailTable(filterData);
+
             return extents[i][0] <= d[p] && d[p] <= extents[i][1];
             
           });
@@ -249,7 +208,7 @@
 
 
       // Displays the detail table
-      function detailTable(d) {
+      function detailTableFromLegend(d) {
 
         //console.log(d);
         var grid = d3.divgrid();
@@ -275,6 +234,7 @@
         });
       }
 
+      // Up
       function update(data) {
         console.log(data);
 
@@ -308,12 +268,12 @@
 
 
       // Displays the detail table
-      function detailTable2(data) {
+      function detailTable(data) {
         console.log("detailTable2: " + data.Key);
 
 
         var grid = d3.divgrid();
-        var cols = grid.columns(["Country","Year","GDP (Billions)", "GNI (Billions)", "Military Spending","Inflation","Revenue","Cash Surplus","Unemployment Rate"]);
+        var cols = grid.columns(["Country","Year","GDP (Billions)", "GNI (Billions)", "Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"]);
   
         d3.select("#grid")
           .datum(data.slice(0,10))
