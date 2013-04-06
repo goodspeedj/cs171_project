@@ -56,6 +56,7 @@
       var line = d3.svg.line();
       var axis = d3.svg.axis().orient("left");
       var foreground;
+      var filterData = new Array();
 
       var svg = d3.select("#vis").append("svg:svg")
           .attr("width", width + margin[1] + margin[3])
@@ -185,7 +186,7 @@
 
         var actives = indicators.filter(function(p) { return !y[p].brush.empty(); });
         var extents = actives.map(function(p) { return y[p].brush.extent(); });
-        var filterData = new Array();
+        var filterData = [];
 
         foreground.classed("fade", function(d, index) {
 
@@ -234,53 +235,20 @@
         });
       }
 
-      // Up
-      function update(data) {
-        console.log(data);
-
-
-          // DATA JOIN
-          // Join new data with old elements, if any.
-          var text = svg.selectAll("text")
-              .data(data);
-
-          // UPDATE
-          // Update old elements as needed.
-          text.attr("class", "update");
-
-          // ENTER
-          // Create new elements as needed.
-          text.enter().append("text")
-              .attr("class", "enter")
-              .attr("x", function(d, i) { return i * 32; })
-              .attr("dy", ".35em");
-
-          // ENTER + UPDATE
-          // Appending to the enter selection expands the update selection to include
-          // entering elements; so, operations on the update selection after appending to
-          // the enter selection will apply to both entering and updating nodes.
-          text.text(function(d) { return d; });
-
-          // EXIT
-          // Remove old elements as needed.
-          text.exit().remove();
-      }
-
 
       // Displays the detail table
       function detailTable(data) {
-        console.log("detailTable2: " + data.Key);
+        console.log("detailTable2: " + data[0]);
 
 
         var grid = d3.divgrid();
         var cols = grid.columns(["Country","Year","GDP (Billions)", "GNI (Billions)", "Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"]);
   
         d3.select("#grid")
-          .datum(data.slice(0,10))
+          .datum(data)
           .call(grid)
 
-        }
-
+      }
 
 
     </script>
