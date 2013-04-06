@@ -10,6 +10,18 @@
     <script type="text/javascript" src="js/d3.v3.min.js"></script>
     <script type="text/javascript" src="js/d3.csv.js"></script>
     <script type="text/javascript" src="js/divgrid.js"></script>
+    <style>
+
+
+.enter {
+  fill: green;
+}
+
+.update {
+  fill: #333;
+}
+
+</style>
   </head>
   <body>
     <header>
@@ -208,14 +220,27 @@
 
         var actives = indicators.filter(function(p) { return !y[p].brush.empty(); });
         var extents = actives.map(function(p) { return y[p].brush.extent(); });
-        
+        var filterData = new Array();
 
         foreground.classed("fade", function(d, index) {
-          //console.log(d);
+          //console.log(d);   // data for all records
+          //console.log("actives: " + actives);
+          //console.log("extents: " + extents);
+
+
           return !actives.every(function(p, i) {
-            //console.log(record);
-                        
-            //detailTable2(d);
+            //console.log("extents[i][0]: " + extents[i][0]);
+            //console.log("d[p]: " + d[p]);   // this is the value of the extent for the country record
+            //console.log("extents[i][1]: " + extents[i][1]);
+
+            // figuring this out made my brain hurt
+            if (extents[i][0] <= d[p] && d[p] <= extents[i][1]) {
+                //console.log("Record we need: " + d.Key + ": " + d.Country);
+                filterData.push(d);
+                
+            }
+            //console.log(filterData.length);
+            detailTable2(filterData);
             return extents[i][0] <= d[p] && d[p] <= extents[i][1];
             
           });
@@ -250,32 +275,51 @@
         });
       }
 
+      function update(data) {
+        console.log(data);
+
+
+          // DATA JOIN
+          // Join new data with old elements, if any.
+          var text = svg.selectAll("text")
+              .data(data);
+
+          // UPDATE
+          // Update old elements as needed.
+          text.attr("class", "update");
+
+          // ENTER
+          // Create new elements as needed.
+          text.enter().append("text")
+              .attr("class", "enter")
+              .attr("x", function(d, i) { return i * 32; })
+              .attr("dy", ".35em");
+
+          // ENTER + UPDATE
+          // Appending to the enter selection expands the update selection to include
+          // entering elements; so, operations on the update selection after appending to
+          // the enter selection will apply to both entering and updating nodes.
+          text.text(function(d) { return d; });
+
+          // EXIT
+          // Remove old elements as needed.
+          text.exit().remove();
+      }
+
+
       // Displays the detail table
       function detailTable2(data) {
+        console.log("detailTable2: " + data.Key);
 
-        //console.log(data);
+
         var grid = d3.divgrid();
-        var cols = grid.columns(["Country","Year","GDP","GNI"]);
-        var filterDat = [{}];
+  d3.select("#grid")
+    .datum(data.slice(0,10))
+    .call(grid)
 
-        //d3.csv(data, function(dat) {
-          var index = 0;
-
-          // extract out the records we want and put in new array
-          //for (var i = 0; i < data.length; i++) {
-          //    if (data[i].Country_Code == d) {
-          //        filterDat[index] = data[i];
-          //        index++;
-          //    }
-          //}
-          
-          // display the records from the new array
-          d3.select('#grid')
-            .datum(data)
-            .call(grid)
-
-        //});
       }
+
+
 
     </script>
   </body>
