@@ -30,7 +30,25 @@
     <div id="vis"></div>
 
     <!-- Place holder for detail table -->
-    <div id="grid"></div>
+    <div id="grid">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-0">Country</th>
+            <th class="col-1">Year</th>
+            <th class="col-2">GDP (Billions)</th>
+            <th class="col-3">GNI (Billions)</th>
+            <th class="col-4">Military Spending (Billions)</th>
+            <th class="col-5">Inflation</th>
+            <th class="col-6">Revenue</th>
+            <th class="col-7">Cash Surplus</th>
+            <th class="col-8">Unemployment Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
     
     <script type="text/javascript">
 
@@ -65,8 +83,37 @@
           .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
 
 
+      // Displays the detail table
+      function detailTable(data) {
+
+        var columns = ["Country","Year","GDP (Billions)", "GNI (Billions)", "Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
+
+        var rows = d3.select("tbody")
+            .selectAll("tr")
+            .data(data);
+
+        rows.enter()
+            .append("tr");
+
+        // create a cell in each row for each column
+        var cells = rows.selectAll("td")
+            .data(function(row) {
+              return columns.map(function(column) {
+                return {column: column, value: row[column]};
+              });
+            })
+          .enter()
+            .append("td")
+              .text(function(d) { return d.value; });
+
+        rows.exit().remove();
+
+      }
+
 
       d3.csv(data, function(conflicts) {
+
+        detailTable(conflicts);
 
         // Create a scale and brush for each economic indicator
         indicators.forEach(function(d) {
@@ -80,6 +127,8 @@
           y[d].brush = d3.svg.brush(conflicts)
               .y(y[d])
               .on("brush", brush);
+
+
         });
 
 
@@ -148,6 +197,7 @@
             .attr("x", -8)
             .attr("width", 20);
 
+        
 
         // used for dragging y axis
         function dragstart(d) {
@@ -176,8 +226,13 @@
 
       // Returns the path for a given data point
       function path(d) {
-        //console.log(d);
         return line(indicators.map(function(p) { return [x(p), y[p](d[p])]; }));
+      }
+
+
+      function fromTablePath(d) {
+          //console.log(d);
+          return line(indicators.map(function(p) { return [x(p), y[p](d[p])]; }));
       }
 
 
@@ -194,8 +249,7 @@
 
             // For records (lines) that are in the brush add to the filterData array
             if (extents[i][0] <= d[p] && d[p] <= extents[i][1]) {
-                filterData.push(d);
-                
+                filterData.push(d);  
             }
 
             // Create the detail table based on the contents of the filterData array
@@ -213,7 +267,7 @@
 
         //console.log(d);
         var grid = d3.divgrid();
-        var cols = grid.columns(["Country","Year","GDP","GNI"]);
+        var cols = grid.columns(["Country","Year","GDP (Billions)", "GNI (Billions)", "Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"]);
         var filterDat = [{}];
 
         d3.csv(data, function(dat) {
@@ -236,19 +290,7 @@
       }
 
 
-      // Displays the detail table
-      function detailTable(data) {
-        console.log("detailTable2: " + data[0]);
-
-
-        var grid = d3.divgrid();
-        var cols = grid.columns(["Country","Year","GDP (Billions)", "GNI (Billions)", "Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"]);
-  
-        d3.select("#grid")
-          .datum(data)
-          .call(grid)
-
-      }
+      
 
 
     </script>

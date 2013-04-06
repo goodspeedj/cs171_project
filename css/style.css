@@ -32,6 +32,16 @@ svg {
   font-size: 13px;
 }
 
+th {
+  text-align: left;
+  background-color: #F0F0F0;
+}
+
+table tr {
+  border: 1px solid gray;
+  padding: 1px;
+}
+
 .row, .header, .cell { height: 18px; }
 .row, .header { clear: left; border: 1px solid gray;}
 .header { font-weight: bold; background-color: #F0F0F0; }
