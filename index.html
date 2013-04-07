@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -17,6 +16,7 @@
   <body>
     <header>
       <div id="header">
+        <p class="title">The Economics of War</p>
         CS 171/CSCI E-64: Visualization<br />
         Project II
       </div>
@@ -25,6 +25,22 @@
         Devin Shackle - devinshackle@gmail.com
       </div>
     </header>
+
+    <div id="dropdown">
+      <form>
+        <select id="list" onchange="selectConflict()">
+
+          <option>Please choose a conflict to examine</option>
+          <option>Persian Gulf War</option>
+          <option>Falklands War</option>  
+          <option>US Invasion of Panama</option>
+          <option>Kosovo War</option>
+          <option>Iraq War</option>
+
+        </select>
+        <p id="description"></p>
+      </form>
+    </div>
 
     <!-- Place holder for the parallel coordinates graph -->
     <div id="vis"></div>
@@ -83,6 +99,21 @@
           .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
 
 
+      // Gets the selected item from the pull down
+      function getSelected() {
+          var list = document.getElementById("list");
+          var item = list.options[list.selectedIndex].value;
+          console.log(item);
+
+          return item;
+      }
+
+
+      function highlight(d) {
+          alert(d);
+      }
+
+
       // Displays the detail table
       function detailTable(data) {
 
@@ -93,7 +124,9 @@
             .data(data);
 
         rows.enter()
-            .append("tr");
+            .append("tr")
+            //.attr("onclick", "highlight(data)");
+            .attr("onclick", "alert(columns)");
 
         // create a cell in each row for each column
         var cells = rows.selectAll("td")
@@ -111,8 +144,19 @@
       }
 
 
-      d3.csv(data, function(conflicts) {
 
+
+      function selectConflict() {
+
+      d3.csv(data, function(fullData) {
+
+        var conflicts = fullData.filter(function(row) {
+          return row["Conflict"] == getSelected();
+        });
+
+        console.log(conflicts);
+
+        // display all data
         detailTable(conflicts);
 
         // Create a scale and brush for each economic indicator
@@ -128,8 +172,8 @@
               .y(y[d])
               .on("brush", brush);
 
-
         });
+
 
 
         // Add a legend for the countries being displayed
@@ -197,7 +241,7 @@
             .attr("x", -8)
             .attr("width", 20);
 
-        
+
 
         // used for dragging y axis
         function dragstart(d) {
@@ -222,6 +266,8 @@
           t.selectAll(".foreground path").attr("d", path);
         }
       });
+
+      }
 
 
       // Returns the path for a given data point
@@ -290,7 +336,7 @@
       }
 
 
-      
+            
 
 
     </script>
