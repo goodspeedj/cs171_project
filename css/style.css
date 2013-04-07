@@ -84,50 +84,104 @@ table tr {
   stroke-width: 2px;
 }
 
-.USA-Pre {
-  stroke: #E41A1C;
+.USA-Pre, .TUR-Pre {
+  stroke: #B2182B;
 }
 
-.USA-During {
-  stroke: #E41A1C;
-  stroke-width=4;
+.USA-During, .TUR-During {
+  stroke: #67001F;
+  stroke-width=2;
 }
 
-.IRQ-Pre {
-  stroke: #377EB8;
+.USA-Post, .TUR-Post {
+  stroke: #D6604D;
 }
 
-.IRQ-During {
-  stroke: #377EB8;
+.EGY-Pre {
+  stroke: #AE017E;
+}
+
+.EGY-During {
+  stroke: #7A0177;
+  stroke-width=2;
+}
+
+.EGY-Post {
+  stroke: #DD3497;
+}
+
+.GBR-Pre, .ISR-Pre {
+  stroke: #0570B0;
+}
+
+.GBR-During, .ISR-During {
+  stroke: #034E7B;
+  stroke-width=2;
+}
+
+.GBR-Post, .ISR-Post {
+  stroke: #3690C0;
+}
+
+.IRN-Pre  {
+  stroke: #762A83;
+}
+
+.IRN-During {
+  stroke: #40004B;
+}
+
+.IRN-Post{
+  stroke: #9970AB;
+}
+
+.IRQ-Pre, .SYR-Pre, .GRC-Pre {
+  stroke: #1B7837;
+}
+
+.IRQ-During, .SYR-During, .GRC-During {
+  stroke: #00441B;
+}
+
+.IRQ-Post, .SYR-Post, .GRC-Post {
+  stroke: #5AAE61;
 }
 
 .IND-Pre {
-  stroke: #4DAF4A;
+  stroke: #01665E;
 }
 
 .IND-During {
-  stroke: #4DAF4A;
+  stroke: #003C30;
 }
 
 .IND-Post {
-  stroke: #4DAF4A;
+  stroke: #35978F;
 }
 
 .PAK-Pre {
-  stroke: #FF00BF;
+  stroke: #8C510A;
 }
 
 .PAK-During {
-  stroke: #FF00BF;
+  stroke: #543005;
 }
 
 .PAK-Post {
-  stroke: #FF00BF;
+  stroke: #BF812D;
 }
 
 
-.NLD {
-  stroke: #40FF00;
+.pre {
+  stroke: #1F78B4;
+}
+
+.during {
+  stroke: #E31A1C;
+}
+
+.post {
+  stroke: #33A02C;
 }
 
 
