@@ -43,7 +43,7 @@
 
     <!-- Place holder for detail table -->
     <div id="grid">
-      <table>
+      <table id="detail-table">
         <thead>
           <tr>
             <th class="col-0">Country</th>
@@ -56,7 +56,7 @@
             <th class="col-7">Inflation; GDP deflator (annual %)</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="table-body">
         </tbody>
       </table>
     </div>
@@ -99,7 +99,13 @@
       // Displays the detail table
       function detailTable(data) {
 
+        console.log(data);
+
         var columns = ["Country","Year","Military expenditure (% of GDP)", "Unemployment; male (% of male labor force)", "GDP growth (annual %)", "GDP per capita (constant 2000 US$)","Unemployment; total (% of total labor force)","Inflation; GDP deflator (annual %)"];
+
+        var tbody = document.createElement("tbody");
+        tbody.id = "table-body";
+        document.getElementById("detail-table").appendChild(tbody);
 
         var rows = d3.select("tbody")
             .selectAll("tr")
@@ -107,8 +113,9 @@
 
         rows.enter()
             .append("tr")
+            .attr("id", function(data) { return data.Key; });
             //.attr("onclick", "highlight(data)");
-            .attr("onclick", "alert(columns)");
+            //.attr("onclick", "alert(columns)");
 
         // create a cell in each row for each column
         var cells = rows.selectAll("td")
@@ -122,7 +129,6 @@
               .text(function(d) { return d.value; });
 
         rows.exit().remove();
-
       }
 
 
@@ -170,8 +176,18 @@
             
           });
 
-          // display all data
+          //detailTable(conflicts);
+
+          if (document.getElementById("table-body")) {
+            var parent = document.getElementById("detail-table");
+            var child = document.getElementById("table-body");
+            parent.removeChild(child);
+          }
+
+
+          //console.log(conflicts);
           detailTable(conflicts);
+          
 
           // Create a scale and brush for each economic indicator
           indicators.forEach(function(d) {
