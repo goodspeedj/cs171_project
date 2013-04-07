@@ -31,12 +31,8 @@
         <select id="list" onchange="selectConflict()">
 
           <option>Please choose a conflict to examine</option>
-          <option>Persian Gulf War</option>
-          <option>Falklands War</option>  
-          <option>US Invasion of Panama</option>
-          <option>Kosovo War</option>
           <option>Iraq War</option>
-          <option>Fake War</option>
+          <option>Indo-Pakistani War of 1965</option>
         </select>
         <p id="description"></p>
       </form>
@@ -51,7 +47,7 @@
         <thead>
           <tr>
             <th class="col-0">Country</th>
-            <th class="col-1">Year</th>
+            <th class="col-1">Years</th>
             <th class="col-2">GDP (Billions)</th>
             <th class="col-3">GNI (Billions)</th>
             <th class="col-4">Military Spending (Billions)</th>
@@ -73,10 +69,13 @@
         visualization found here: http://mbostock.github.com/d3/talk/20111116/iris-parallel.html
        */
 
-      var data = "data/conflict.csv";
+      var data = "data/conflictPreCompute.csv";
 
-      var countries = ["USA","CAN", "GBR"];
-      var indicators = ["GDP (Billions)","GNI (Billions)","Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
+      var countries = ["USA","IRQ", "IND", "PAK"];
+      //var indicators = ["GDP (Billions)","GNI (Billions)","Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
+      //var indicators = ["Military expenditure (% of GDP)", "Unemployment", "Unemployment; male (% of male labor force)", "GDP growth (annual %)", "GDP per capita (constant 2000 US$)","Unemployment; total (% of total labor force)","Inflation; GDP deflator (annual %)"];
+
+      var indicators = ["Military expenditure (% of GDP)", "Unemployment; male (% of male labor force)", "GDP growth (annual %)", "GDP per capita (constant 2000 US$)","Unemployment; total (% of total labor force)","Inflation; GDP deflator (annual %)"];
 
       var margin = [60, 120, 60, 120];
       var width  = 1024 - margin[1] - margin[3];
@@ -249,7 +248,8 @@
           .enter().append("svg:path")
             .attr("d", path)
             .attr("d", path)
-            .attr("class", function(d) { return d.Country_Code; });
+            //.attr("class","blackline");
+            .attr("class", function(d) { return d.Country; });
 
 
 
