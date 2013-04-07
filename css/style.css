@@ -81,21 +81,47 @@ table tr {
   stroke-width: 2px;
 }
 
-.USA {
+.USA-Pre {
   stroke: #E41A1C;
 }
 
-.IRQ {
+.USA-During {
+  stroke: #E41A1C;
+  stroke-width=4;
+}
+
+.IRQ-Pre {
   stroke: #377EB8;
 }
 
-.IND {
+.IRQ-During {
+  stroke: #377EB8;
+}
+
+.IND-Pre {
   stroke: #4DAF4A;
 }
 
-.PAK {
+.IND-During {
+  stroke: #4DAF4A;
+}
+
+.IND-Post {
+  stroke: #4DAF4A;
+}
+
+.PAK-Pre {
   stroke: #FF00BF;
 }
+
+.PAK-During {
+  stroke: #FF00BF;
+}
+
+.PAK-Post {
+  stroke: #FF00BF;
+}
+
 
 .NLD {
   stroke: #40FF00;

@@ -1,6 +1,6 @@
-Country,Year,Military expenditure (% of GDP),Unemployment; male (% of male labor force),GDP growth (annual %),GDP per capita (constant 2000 US$),Unemployment; total (% of total labor force),Inflation; GDP deflator (annual %),GDP (constant 2000 US$),Conflict,Stage,Country Name
-USA,2003-2011,4.264344882,6.649999976,1.612166166,37499.95891,6.31250006,2.313849515,11300000000000.00,Iraq War,During,United States of America
-USA,2000-2002,3.157387457,4.866666794,2.364871645,35208.68271,4.833333333,2.018235315,10000000000000.00,Iraq War,Pre,United States of America
+Code,Year,Military expenditure (% of GDP),Unemployment; male (% of male labor force),GDP growth (annual %),GDP per capita (constant 2000 US$),Unemployment; total (% of total labor force),Inflation; GDP deflator (annual %),GDP (constant 2000 US$),Conflict,Stage,Country
+USA,2003-2011,4.264344882,6.649999976,1.612166166,37499.95891,6.31250006,2.313849515,11300000000000.00,Iraq War,During,United States
+USA,2000-2002,3.157387457,4.866666794,2.364871645,35208.68271,4.833333333,2.018235315,10000000000000.00,Iraq War,Pre,United States
 IRQ,2003-2011,3.691676876,23.75000048,4.071930807,703.0235729,22.59999991,15.42150861,20806058017.00,Iraq War,During,Iraq
 IRQ,2000-2002,,,-6.233333333,967.4885494,,11.99228905,24091480059.00,Iraq War,Pre,Iraq
 IND,1962-1964,,,5.45947704,193.6494681,,7.103639194,92259614733.00,Indo-Pakistani War of 1965,Pre,India

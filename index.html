@@ -71,7 +71,7 @@
 
       var data = "data/conflictPreCompute.csv";
 
-      var countries = ["USA","IRQ", "IND", "PAK"];
+      //var countries = ["USA","IRQ", "IND", "PAK"];
       //var indicators = ["GDP (Billions)","GNI (Billions)","Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
       //var indicators = ["Military expenditure (% of GDP)", "Unemployment", "Unemployment; male (% of male labor force)", "GDP growth (annual %)", "GDP per capita (constant 2000 US$)","Unemployment; total (% of total labor force)","Inflation; GDP deflator (annual %)"];
 
@@ -161,6 +161,7 @@
 
       function selectConflict() {
 
+        // Redraw
         if (document.getElementById("container")) {
           var parent = document.getElementById("vis");
           var child = document.getElementById("container");
@@ -172,15 +173,15 @@
               .attr("id", "container")
             .append("svg:g")
               .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
-      }
-      else {
-          var svg = d3.select("#vis").append("svg:svg")
-              .attr("width", width + margin[1] + margin[3])
-              .attr("height", height + margin[0] + margin[2])
-              .attr("id", "container")
-            .append("svg:g")
-              .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
-      }
+        }
+        else {
+            var svg = d3.select("#vis").append("svg:svg")
+                .attr("width", width + margin[1] + margin[3])
+                .attr("height", height + margin[0] + margin[2])
+                .attr("id", "container")
+              .append("svg:g")
+                .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
+        }
           
 
       d3.csv(data, function(fullData) {
@@ -189,14 +190,21 @@
           return row["Conflict"] == getSelected();
         });
 
-        
-        
 
+        // Used to populate the legend
+        var countries = [];
+        fullData.filter(function(row, i) {
+          if (row["Conflict"] == getSelected()) {
+            console.log(row.Country + ": " + row.Stage);
+            countries.push(row.Code + "-" + row.Stage); 
+          }
+          
+        });
 
         // display all data
         detailTable(conflicts);
 
-        console.log(conflicts);
+        //console.log(conflicts);
 
         // Create a scale and brush for each economic indicator
         indicators.forEach(function(d) {
@@ -236,8 +244,8 @@
         legend.append("svg:text")
             .attr("x", 12)
             .attr("dy", ".31em")
-            .text(function(d) { return "Country: " + d; })
-            .on("click", detailTableFromLegend);
+            .text(function(d) { return d; });
+            //.on("click", detailTableFromLegend);
 
 
         // Add foreground lines (the main lines in the visualization)
@@ -249,7 +257,7 @@
             .attr("d", path)
             .attr("d", path)
             //.attr("class","blackline");
-            .attr("class", function(d) { return d.Country; });
+            .attr("class", function(d) { return d.Code + "-" + d.Stage; });
 
 
 
