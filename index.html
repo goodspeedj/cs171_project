@@ -36,7 +36,7 @@
           <option>US Invasion of Panama</option>
           <option>Kosovo War</option>
           <option>Iraq War</option>
-
+          <option>Fake War</option>
         </select>
         <p id="description"></p>
       </form>
@@ -148,19 +148,24 @@
 
       function selectConflict() {
 
+
       d3.csv(data, function(fullData) {
 
         var conflicts = fullData.filter(function(row) {
           return row["Conflict"] == getSelected();
         });
 
-        console.log(conflicts);
+        
+        
+
 
         // display all data
         detailTable(conflicts);
 
         // Create a scale and brush for each economic indicator
         indicators.forEach(function(d) {
+
+          redrawAxis();
 
           // scale
           y[d] = d3.scale.linear()
@@ -174,6 +179,7 @@
 
         });
 
+        redrawPath(conflicts);
 
 
         // Add a legend for the countries being displayed
@@ -209,6 +215,7 @@
             .attr("class", function(d) { return d.Country_Code; });
 
 
+
         // Add a group element for each economic indicator
         var g = svg.selectAll(".indicator")
             .data(indicators)
@@ -242,7 +249,6 @@
             .attr("width", 20);
 
 
-
         // used for dragging y axis
         function dragstart(d) {
           i = indicators.indexOf(d);
@@ -267,6 +273,30 @@
         }
       });
 
+      }
+
+
+      function redrawPath(data) {
+        svg.selectAll("path")
+            .data(data)
+            .transition()
+              .delay(1000)
+              .duration(5000)
+            .attr("d", path)
+            .attr("class", function(d) { return d.Country_Code; });
+      }
+
+      function redrawAxis() {
+        
+        svg.selectAll(".axis")
+          .attr("class", "axis")
+            .each(function(d) { d3.select(this).call(axis.scale(y[d])); }) 
+          .append("svg:text")
+            .attr("text-anchor", "middle")
+            .attr("y", -9)
+            .text(String);
+
+          
       }
 
 

@@ -93,18 +93,15 @@ table tr {
   stroke: #4DAF4A;
 }
 
-.IRQ {
-  stroke: #984EA3;
+
+
+.DNK {
+  stroke: #FF00BF;
 }
 
-.PAK {
-  stroke: #FF7F00;
+.NLD {
+  stroke: #40FF00;
 }
-
-.AUS {
-  stroke: #A65628;
-}
-
 
 
 .brush .extent {
