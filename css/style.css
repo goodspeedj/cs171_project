@@ -1,6 +1,9 @@
 #vis {
     width: 1024px;
     height: 500px;
+    position: absolute;
+    top: 130px;
+    left: 35px;
 }
 
 #grid {
@@ -149,7 +152,7 @@ table tr {
 body {
   font: 300 36px "Helvetica Neue";
   height: 640px;
-  margin: 20px;
+  margin: 10px;
   position: relative;
   width: 960px;
 }
@@ -181,6 +184,12 @@ blockquote:after {
 body > ul {
   margin: 0;
   padding: 0;
+}
+
+#dropdown {
+  position: absolute;
+  top: 15px;
+  left: 433px;
 }
 
 h1 {
