@@ -13,7 +13,7 @@
     <script type="text/javascript" src="js/divgrid.js"></script>
 
   </head>
-  <body>
+  <body onload="selectConflict();">
     <header>
       <div id="header">
         <p class="title">The Economics of War</p>
@@ -170,9 +170,16 @@
 
         d3.csv(data, function(fullData) {
 
+          console.log("selected: " + getSelected());
+
           // filter
           var conflicts = fullData.filter(function(row) {
-            return row["Conflict"] == getSelected();
+            if (getSelected() == "Please choose a conflict to examine") {
+              return fullData;
+            }
+            else {
+              return row["Conflict"] == getSelected();
+            }
           });
 
 
