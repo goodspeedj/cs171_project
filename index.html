@@ -48,13 +48,12 @@
           <tr>
             <th class="col-0">Country</th>
             <th class="col-1">Years</th>
-            <th class="col-2">GDP (Billions)</th>
-            <th class="col-3">GNI (Billions)</th>
-            <th class="col-4">Military Spending (Billions)</th>
-            <th class="col-5">Inflation</th>
-            <th class="col-6">Revenue</th>
-            <th class="col-7">Cash Surplus</th>
-            <th class="col-8">Unemployment Rate</th>
+            <th class="col-2">Military expenditure (% of GDP)</th>
+            <th class="col-3">Unemployment; male (% of male labor force)</th>
+            <th class="col-4">GDP growth (annual %)</th>
+            <th class="col-5">GDP per capita (constant 2000 US$)</th>
+            <th class="col-6">Unemployment; total (% of total labor force)</th>
+            <th class="col-7">Inflation; GDP deflator (annual %)</th>
           </tr>
         </thead>
         <tbody>
@@ -69,12 +68,10 @@
         visualization found here: http://mbostock.github.com/d3/talk/20111116/iris-parallel.html
        */
 
+       // main data file
       var data = "data/conflictPreCompute.csv";
 
-      //var countries = ["USA","IRQ", "IND", "PAK"];
-      //var indicators = ["GDP (Billions)","GNI (Billions)","Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
-      //var indicators = ["Military expenditure (% of GDP)", "Unemployment", "Unemployment; male (% of male labor force)", "GDP growth (annual %)", "GDP per capita (constant 2000 US$)","Unemployment; total (% of total labor force)","Inflation; GDP deflator (annual %)"];
-
+      // economic indicators (y axis)
       var indicators = ["Military expenditure (% of GDP)", "Unemployment; male (% of male labor force)", "GDP growth (annual %)", "GDP per capita (constant 2000 US$)","Unemployment; total (% of total labor force)","Inflation; GDP deflator (annual %)"];
 
       var margin = [60, 120, 60, 120];
@@ -89,48 +86,20 @@
       var foreground;
       var filterData = new Array();
 
-      /*
-      if (document.getElementById("container")) {
-          var parent = document.getElementById("vis");
-          var child = document.getElementById("container");
-          parent.removeChild(child);
-      }
-      else {
-          var svg = d3.select("#vis").append("svg:svg")
-              .attr("width", width + margin[1] + margin[3])
-              .attr("height", height + margin[0] + margin[2])
-              .attr("id", "container")
-            .append("svg:g")
-              .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
-      }
-      
 
-      
-      var svg = d3.select("#vis").append("svg:svg")
-          .attr("width", width + margin[1] + margin[3])
-          .attr("height", height + margin[0] + margin[2])
-          .attr("id", "container");
-
-      var gtt = svg.append("svg:g")
-          .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")")
-          .attr("id", "gtt");
-      */
-
-      // Gets the selected item from the pull down
+      // Gets the selected item from the pull down for the filter
       function getSelected() {
-          var list = document.getElementById("list");
-          var item = list.options[list.selectedIndex].value;
+        var list = document.getElementById("list");
+        var item = list.options[list.selectedIndex].value;
 
-          return item;
+        return item;
       }
 
 
       // Displays the detail table
       function detailTable(data) {
 
-        //console.log(data);
-
-        var columns = ["Country","Year","GDP (Billions)", "GNI (Billions)", "Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
+        var columns = ["Country","Year","Military expenditure (% of GDP)", "Unemployment; male (% of male labor force)", "GDP growth (annual %)", "GDP per capita (constant 2000 US$)","Unemployment; total (% of total labor force)","Inflation; GDP deflator (annual %)"];
 
         var rows = d3.select("tbody")
             .selectAll("tr")
@@ -184,144 +153,142 @@
         }
           
 
-      d3.csv(data, function(fullData) {
+        d3.csv(data, function(fullData) {
 
-        var conflicts = fullData.filter(function(row) {
-          return row["Conflict"] == getSelected();
-        });
+          // filter
+          var conflicts = fullData.filter(function(row) {
+            return row["Conflict"] == getSelected();
+          });
 
 
-        // Used to populate the legend
-        var countries = [];
-        fullData.filter(function(row, i) {
-          if (row["Conflict"] == getSelected()) {
-            console.log(row.Country + ": " + row.Stage);
-            countries.push(row.Code + "-" + row.Stage); 
+          // Used to populate the legend
+          var countries = [];
+          fullData.filter(function(row, i) {
+            if (row["Conflict"] == getSelected()) {
+              countries.push(row.Code + "-" + row.Stage); 
+            }
+            
+          });
+
+          // display all data
+          detailTable(conflicts);
+
+          // Create a scale and brush for each economic indicator
+          indicators.forEach(function(d) {
+
+            //redrawAxis();
+
+            // scale
+            y[d] = d3.scale.linear()
+                .domain(d3.extent(conflicts, function(p) { return +p[d]; }))
+                .range([height, 0]);
+
+            // brush
+            y[d].brush = d3.svg.brush(conflicts)
+                .y(y[d])
+                .on("brush", brush);
+
+          });
+
+          //redrawPath(conflicts);
+
+
+          // Add a legend for the countries being displayed
+          var legend = svg.selectAll("g.legend")
+              .data(countries)
+            .enter().append("svg:g")
+              .attr("class", "legend")
+              .attr("transform", function(d, i) { return "translate(850," + (i * 20 + 50) + ")"; });
+
+
+          // color lines in legend for each country
+          legend.append("svg:line")
+              .attr("class", String)
+              .attr("x2", 8);
+
+
+          // country names in the legend
+          legend.append("svg:text")
+              .attr("x", 12)
+              .attr("dy", ".31em")
+              .text(function(d) { return d; });
+              //.on("click", detailTableFromLegend);
+
+
+          // Add foreground lines (the main lines in the visualization)
+          foreground = svg.append("svg:g")
+              .attr("class", "foreground")
+            .selectAll("path")
+              .data(conflicts)
+            .enter().append("svg:path")
+              .attr("d", path)
+              .attr("d", path)
+              .attr("class", function(d) { return d.Code + "-" + d.Stage; });
+
+
+
+          // Add a group element for each economic indicator
+          var g = svg.selectAll(".indicator")
+              .data(indicators)
+            .enter().append("svg:g")
+              .attr("class", "indicator")
+              .attr("transform", function(d) { return "translate(" + x(d) + ")"; })
+              .call(d3.behavior.drag()
+              .origin(function(d) { return {x: x(d)}; })
+              .on("dragstart", dragstart)
+              .on("drag", drag)
+              .on("dragend", dragend)
+              );
+
+
+          // Add an axis and title
+          g.append("svg:g")
+              .attr("class", "axis")
+              .each(function(d) { d3.select(this).call(axis.scale(y[d])); })
+            .append("svg:text")
+              .attr("text-anchor", "middle")
+              .attr("y", -9)
+              .attr("class", "axis-title")
+              .text(String);
+
+
+          // Add a brush for each axis
+          g.append("svg:g")
+              .attr("class", "brush")
+              .each(function(d) { d3.select(this).call(y[d].brush); })
+            .selectAll("rect")
+              .attr("x", -8)
+              .attr("width", 20);
+
+
+          // used for dragging y axis
+          function dragstart(d) {
+            i = indicators.indexOf(d);
           }
-          
+
+
+          // used for dragging y axis
+          function drag(d) {
+            x.range()[i] = d3.event.x;
+            indicators.sort(function(a, b) { return x(a) - x(b); });
+            g.attr("transform", function(d) { return "translate(" + x(d) + ")"; });
+            foreground.attr("d", path);
+          }
+
+
+          // used for dragging y axis
+          function dragend(d) {
+            x.domain(indicators).rangePoints([0, width]);
+            var t = d3.transition().duration(500);
+            t.selectAll(".indicator").attr("transform", function(d) { return "translate(" + x(d) + ")"; });
+            t.selectAll(".foreground path").attr("d", path);
+          }
         });
-
-        // display all data
-        detailTable(conflicts);
-
-        //console.log(conflicts);
-
-        // Create a scale and brush for each economic indicator
-        indicators.forEach(function(d) {
-
-          //redrawAxis();
-
-          // scale
-          y[d] = d3.scale.linear()
-              .domain(d3.extent(conflicts, function(p) { return +p[d]; }))
-              .range([height, 0]);
-
-          // brush
-          y[d].brush = d3.svg.brush(conflicts)
-              .y(y[d])
-              .on("brush", brush);
-
-        });
-
-        //redrawPath(conflicts);
-
-
-        // Add a legend for the countries being displayed
-        var legend = svg.selectAll("g.legend")
-            .data(countries)
-          .enter().append("svg:g")
-            .attr("class", "legend")
-            .attr("transform", function(d, i) { return "translate(850," + (i * 20 + 50) + ")"; });
-
-
-        // color lines in legend for each country
-        legend.append("svg:line")
-            .attr("class", String)
-            .attr("x2", 8);
-
-
-        // country names in the legend
-        legend.append("svg:text")
-            .attr("x", 12)
-            .attr("dy", ".31em")
-            .text(function(d) { return d; });
-            //.on("click", detailTableFromLegend);
-
-
-        // Add foreground lines (the main lines in the visualization)
-        foreground = svg.append("svg:g")
-            .attr("class", "foreground")
-          .selectAll("path")
-            .data(conflicts)
-          .enter().append("svg:path")
-            .attr("d", path)
-            .attr("d", path)
-            //.attr("class","blackline");
-            .attr("class", function(d) { return d.Code + "-" + d.Stage; });
-
-
-
-        // Add a group element for each economic indicator
-        var g = svg.selectAll(".indicator")
-            .data(indicators)
-          .enter().append("svg:g")
-            .attr("class", "indicator")
-            .attr("transform", function(d) { return "translate(" + x(d) + ")"; })
-            .call(d3.behavior.drag()
-            .origin(function(d) { return {x: x(d)}; })
-            .on("dragstart", dragstart)
-            .on("drag", drag)
-            .on("dragend", dragend)
-            );
-
-
-        // Add an axis and title
-        g.append("svg:g")
-            .attr("class", "axis")
-            .each(function(d) { d3.select(this).call(axis.scale(y[d])); })
-          .append("svg:text")
-            .attr("text-anchor", "middle")
-            .attr("y", -9)
-            .attr("class", "axis-title")
-            .text(String);
-
-
-        // Add a brush for each axis
-        g.append("svg:g")
-            .attr("class", "brush")
-            .each(function(d) { d3.select(this).call(y[d].brush); })
-          .selectAll("rect")
-            .attr("x", -8)
-            .attr("width", 20);
-
-
-        // used for dragging y axis
-        function dragstart(d) {
-          i = indicators.indexOf(d);
-        }
-
-
-        // used for dragging y axis
-        function drag(d) {
-          x.range()[i] = d3.event.x;
-          indicators.sort(function(a, b) { return x(a) - x(b); });
-          g.attr("transform", function(d) { return "translate(" + x(d) + ")"; });
-          foreground.attr("d", path);
-        }
-
-
-        // used for dragging y axis
-        function dragend(d) {
-          x.domain(indicators).rangePoints([0, width]);
-          var t = d3.transition().duration(500);
-          t.selectAll(".indicator").attr("transform", function(d) { return "translate(" + x(d) + ")"; });
-          t.selectAll(".foreground path").attr("d", path);
-        }
-      });
 
       }
 
 
+      // not fully operational - maybe for project III
       function redrawPath(data) {
         svg.selectAll("path")
             .data(data)
@@ -331,11 +298,11 @@
             .attr("d", path)
             .attr("class", function(d) { return d.Country_Code; });
 
-        //console.log(data);
-
         detailTable(data);
       }
 
+
+      // not fully operational - maybe for project III
       function redrawAxis() {
         
         svg.selectAll(".axis")
@@ -345,8 +312,6 @@
             .attr("text-anchor", "middle")
             .attr("y", -9)
             .text(String);
-
-          
       }
 
 
@@ -357,7 +322,6 @@
 
 
       function fromTablePath(d) {
-          //console.log(d);
           return line(indicators.map(function(p) { return [x(p), y[p](d[p])]; }));
       }
 
@@ -414,10 +378,6 @@
 
         });
       }
-
-
-            
-
 
     </script>
   </body>
