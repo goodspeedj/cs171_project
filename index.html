@@ -126,16 +126,6 @@
       }
 
 
-<<<<<<< HEAD
-      function highlight(d) {
-          alert(d);
-      }
-
-
-
-
-=======
->>>>>>> Changes to update the vis based on the pull down
       // Displays the detail table
       function detailTable(data) {
 
@@ -183,8 +173,6 @@
               .attr("id", "container")
             .append("svg:g")
               .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
-
-          
       }
       else {
           var svg = d3.select("#vis").append("svg:svg")
@@ -208,6 +196,8 @@
 
         // display all data
         detailTable(conflicts);
+
+        console.log(conflicts);
 
         // Create a scale and brush for each economic indicator
         indicators.forEach(function(d) {
