@@ -46,9 +46,17 @@ table tr {
 }
 
 .title {
-  font-size: 22px;
+  font-size: 30px;
   color: black;
   font-weight: bold;
+  position: absolute;
+  left: 495px;
+  margin: 0px;
+}
+
+#detail-table {
+  position: absolute;
+  top: 575px;
 }
 
 .row, .header, .cell { height: 18px; }
@@ -243,7 +251,7 @@ body > ul {
 #dropdown {
   position: absolute;
   top: 15px;
-  left: 433px;
+  left: 530px;
 }
 
 h1 {
