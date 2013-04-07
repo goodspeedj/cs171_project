@@ -75,11 +75,9 @@
 
       var data = "data/conflict.csv";
 
-      //var countries = ["USA", "GBR","PAK","AFG","CAN","AUS","IRQ","POL","KOR","UKR","ITA","GEO","ESP","DNK","NLD"];
       var countries = ["USA","CAN", "GBR"];
       var indicators = ["GDP (Billions)","GNI (Billions)","Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
 
-      //var margin = [190, 170, 50, 260];
       var margin = [60, 120, 60, 120];
       var width  = 1024 - margin[1] - margin[3];
       var height = 500 - margin[0] - margin[2];
@@ -92,23 +90,43 @@
       var foreground;
       var filterData = new Array();
 
+      /*
+      if (document.getElementById("container")) {
+          var parent = document.getElementById("vis");
+          var child = document.getElementById("container");
+          parent.removeChild(child);
+      }
+      else {
+          var svg = d3.select("#vis").append("svg:svg")
+              .attr("width", width + margin[1] + margin[3])
+              .attr("height", height + margin[0] + margin[2])
+              .attr("id", "container")
+            .append("svg:g")
+              .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
+      }
+      
+
+      
       var svg = d3.select("#vis").append("svg:svg")
           .attr("width", width + margin[1] + margin[3])
           .attr("height", height + margin[0] + margin[2])
-        .append("svg:g")
-          .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
+          .attr("id", "container");
 
+      var gtt = svg.append("svg:g")
+          .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")")
+          .attr("id", "gtt");
+      */
 
       // Gets the selected item from the pull down
       function getSelected() {
           var list = document.getElementById("list");
           var item = list.options[list.selectedIndex].value;
-          console.log(item);
 
           return item;
       }
 
 
+<<<<<<< HEAD
       function highlight(d) {
           alert(d);
       }
@@ -116,8 +134,12 @@
 
 
 
+=======
+>>>>>>> Changes to update the vis based on the pull down
       // Displays the detail table
       function detailTable(data) {
+
+        //console.log(data);
 
         var columns = ["Country","Year","GDP (Billions)", "GNI (Billions)", "Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"];
 
@@ -150,6 +172,29 @@
 
       function selectConflict() {
 
+        if (document.getElementById("container")) {
+          var parent = document.getElementById("vis");
+          var child = document.getElementById("container");
+          parent.removeChild(child);
+
+          var svg = d3.select("#vis").append("svg:svg")
+              .attr("width", width + margin[1] + margin[3])
+              .attr("height", height + margin[0] + margin[2])
+              .attr("id", "container")
+            .append("svg:g")
+              .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
+
+          
+      }
+      else {
+          var svg = d3.select("#vis").append("svg:svg")
+              .attr("width", width + margin[1] + margin[3])
+              .attr("height", height + margin[0] + margin[2])
+              .attr("id", "container")
+            .append("svg:g")
+              .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
+      }
+          
 
       d3.csv(data, function(fullData) {
 
@@ -167,7 +212,7 @@
         // Create a scale and brush for each economic indicator
         indicators.forEach(function(d) {
 
-          redrawAxis();
+          //redrawAxis();
 
           // scale
           y[d] = d3.scale.linear()
@@ -181,7 +226,7 @@
 
         });
 
-        redrawPath(conflicts);
+        //redrawPath(conflicts);
 
 
         // Add a legend for the countries being displayed
@@ -286,6 +331,10 @@
               .duration(5000)
             .attr("d", path)
             .attr("class", function(d) { return d.Country_Code; });
+
+        //console.log(data);
+
+        detailTable(data);
       }
 
       function redrawAxis() {
