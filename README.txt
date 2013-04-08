@@ -110,7 +110,5 @@ are hosted locally within our project in the js folder.
 # ==========================================================================================
 
 Our project uses one data file called conflictPreCompute.csv.  It is located in the data
-directory of our project and is loaded using d3.csv.
-
-
-
+directory of our project and is loaded using d3.csv.  Much of the data clean-up for this file
+was done with the proj2Transposer.py script.
