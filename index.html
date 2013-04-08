@@ -252,18 +252,18 @@
               .data(countries)
             .enter().append("svg:g")
               .attr("class", "legend")
-              .attr("transform", function(d, i) { return "translate(850," + (i * 20 + 50) + ")"; });
+              .attr("transform", function(d, i) { return "translate(800," + (i * 30 + 50) + ")"; });
 
 
           // color lines in legend for each country
           legend.append("svg:line")
               .attr("class", String)
-              .attr("x2", 8);
+              .attr("x2", 50);
 
 
           // country names in the legend
           legend.append("svg:text")
-              .attr("x", 12)
+              .attr("x", 60)
               .attr("dy", ".31em")
               .text(function(d) { return d; });
               //.on("click", detailTableFromLegend);
