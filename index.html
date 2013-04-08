@@ -226,7 +226,9 @@
           //console.log(conflicts);
           detailTable(conflicts);
 
-          addDesc(conflicts);
+          if (getSelected() != "Please choose a conflict (or all)") {
+              addDesc(conflicts);
+          }
           
 
           // Create a scale and brush for each economic indicator
