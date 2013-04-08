@@ -385,34 +385,6 @@
         });
       }
 
-
-      // Displays the detail table
-      function detailTableFromLegend(d) {
-
-        //console.log(d);
-        var grid = d3.divgrid();
-        var cols = grid.columns(["Country","Year","GDP (Billions)", "GNI (Billions)", "Military Spending (Billions)","Inflation","Revenue","Cash Surplus","Unemployment Rate"]);
-        var filterDat = [{}];
-
-        d3.csv(data, function(dat) {
-          var index = 0;
-
-          // extract out the records we want and put in new array
-          for (var i = 0; i < dat.length; i++) {
-              if (dat[i].Country_Code == d) {
-                  filterDat[index] = dat[i];
-                  index++;
-              }
-          }
-          
-          // display the records from the new array
-          d3.select('#grid')
-            .datum(filterDat)
-            .call(grid)
-
-        });
-      }
-
     </script>
   </body>
 </html>
