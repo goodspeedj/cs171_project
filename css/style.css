@@ -31,6 +31,12 @@
     width: 940px;
 }
 
+#conflict_desc {
+  float: left;
+  font-size: 14px;
+  margin:30px;
+}
+
 svg {
   font-size: 13px;
 }
@@ -55,6 +61,7 @@ tbody tr:nth-child(odd) {
   border-top: solid;
   border-right: solid;
   border-bottom: solid;
+  float: left;
 }
 
 .title {

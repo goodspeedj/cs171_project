@@ -23,8 +23,12 @@
       </div>
     </header>
 
-    <div id="instructions">
-     <p>This visualization will allow you to explore certain economic factors of countries involved in recent conflicts. Comparing the economic well-being of countries before, during, and after significant armed conflicts will show how their involvement effected their economies. Please select a conflict from the drop-down menu to begin and enjoy exploring <strong>The Economics of War</strong>.</p> 
+    <div id="top">
+      <div id="instructions">
+       <p>This visualization will allow you to explore certain economic factors of countries involved in recent conflicts. Comparing the economic well-being of countries before, during, and after significant armed conflicts will show how their involvement effected their economies. Please select a conflict from the drop-down menu to begin and enjoy exploring <strong>The Economics of War</strong>.</p> 
+      </div>
+      <div id="conflict_desc">
+      </div>
     </div>
 
     <div id="dropdown">
@@ -103,6 +107,20 @@
         var item = list.options[list.selectedIndex].value;
 
         return item;
+      }
+
+
+      // Add a description of the conflict
+      function addDesc(data) {
+        var div = document.createElement("div");
+        
+        div.id = "conflict_desc";
+        document.getElementById("top").appendChild(div);
+
+        var desc = d3.select("#conflict_desc")
+          .data(data)
+          .append("p");
+
       }
 
 
@@ -191,14 +209,19 @@
             
           });
 
-          //detailTable(conflicts);
+          
+          if (document.getElementById("conflict_desc")) {
+            var parent = document.getElementById("top");
+            var child = document.getElementById("conflict_desc");
+            parent.removeChild(child);
+          }
+
 
           if (document.getElementById("table-body")) {
             var parent = document.getElementById("detail-table");
             var child = document.getElementById("table-body");
             parent.removeChild(child);
           }
-
 
           //console.log(conflicts);
           detailTable(conflicts);
