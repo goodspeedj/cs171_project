@@ -27,8 +27,7 @@
       <div id="instructions">
        <p>This visualization will allow you to explore certain economic factors of countries involved in recent conflicts. Comparing the economic well-being of countries before, during, and after significant armed conflicts will show how their involvement effected their economies. Please select a conflict from the drop-down menu to begin and enjoy exploring <strong>The Economics of War</strong>.</p> 
       </div>
-      <div id="conflict_desc">
-      </div>
+      <div id="conflict_desc"></div>
     </div>
 
     <div id="dropdown">
@@ -119,7 +118,8 @@
 
         var desc = d3.select("#conflict_desc")
           .data(data)
-          .append("p");
+          .append("p")
+            .text(function(data) { return data.Description; });
 
       }
 
@@ -225,6 +225,8 @@
 
           //console.log(conflicts);
           detailTable(conflicts);
+
+          addDesc(conflicts);
           
 
           // Create a scale and brush for each economic indicator

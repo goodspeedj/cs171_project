@@ -89,19 +89,20 @@ h3 {
 
 #description {
     font-size: 14px;
-    margin: 20px;
+    margin: 5px;
     width: 940px;
 }
 
 #conflict_desc {
-  float: left;
-  font-size: 14px;
-  margin:30px;
+  float: right;
+  font-size: 12px;
+  margin:5px;   
+  width: 650px;
 }
 
 #instructions p {
   font-size: 12px;
-  width: 300px;
+  width: 275px;
   border-top: solid;
   border-right: solid;
   border-bottom: solid;
@@ -111,6 +112,12 @@ h3 {
 #detail-table {
   position: absolute;
   top: 650px;
+}
+
+#top {
+  width: 100%;
+  margin:0 auto;
+  background: blue;
 }
 
 #dropdown {
@@ -192,20 +199,20 @@ h3 {
   stroke-opacity: .65;
 }
 
-.EGY-Pre {
+.EGY-Pre, .AUS-Pre {
   stroke: #7A0177;
   stroke-dasharray: 5,5;
   stroke-opacity: .65;
 }
 
-.EGY-During {
+.EGY-During, .AUS-During {
   stroke: #7A0177;
   stroke-width: 2px;
   fill:none;
   stroke-opacity: .75;
 }
 
-.EGY-Post {
+.EGY-Post, .AUS-Post {
   stroke: #7A0177;
   stroke-dasharray: 20,10,5,5,5,10;
   stroke-opacity: .65;
@@ -268,20 +275,20 @@ h3 {
   stroke-opacity: .65;
 }
 
-.IND-Pre {
+.IND-Pre, {
   stroke: #003C30;
   stroke-dasharray: 5,5;
   stroke-opacity: .65;
 }
 
-.IND-During {
+.IND-During, {
   stroke: #003C30;
   stroke-width: 2px;
   fill:none;
   stroke-opacity: .75;
 }
 
-.IND-Post {
+.IND-Post, {
   stroke: #003C30;
   stroke-dasharray: 20,10,5,5,5,10;
   stroke-opacity: .65;
