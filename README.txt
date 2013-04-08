@@ -18,7 +18,8 @@ python -m SimpleHTTPServer 8888 &
 
 # ==========================================================================================
 #
-# Code overview
+# Code overview.  The model for the parallel coordinate graph was based on the Iris parallel
+# coordinate graph here: http://mbostock.github.io/d3/talk/20111116/iris-parallel.html
 #
 # ==========================================================================================
 
