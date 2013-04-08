@@ -112,11 +112,10 @@
       // Displays the detail table
       function detailTable(data) {
 
-        console.log(data);
-
         var columns = ["Country","Year","Military expenditure (% of GDP)", "Unemployment; male (% of male labor force)", "GDP growth (annual %)", "GDP per capita (constant 2000 US$)","Unemployment; total (% of total labor force)","Inflation; GDP deflator (annual %)"];
 
         var tbody = document.createElement("tbody");
+        
         tbody.id = "table-body";
         document.getElementById("detail-table").appendChild(tbody);
 
@@ -128,7 +127,6 @@
             .append("tr")
             .attr("id", function(data) { return data.Key; });
             //.attr("onclick", "highlight(data)");
-            //.attr("onclick", "alert(columns)");
 
         // create a cell in each row for each column
         var cells = rows.selectAll("td")
