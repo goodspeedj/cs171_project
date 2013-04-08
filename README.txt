@@ -91,3 +91,25 @@ function brush()
 
 
 
+# ==========================================================================================
+#
+# Libraries
+#
+# ==========================================================================================
+
+Our project makes use of the main d3.v3.min.js file and the d3.csv.js library.  Both libraries
+are hosted locally within our project in the js folder.
+
+
+
+# ==========================================================================================
+#
+# Data Files
+#
+# ==========================================================================================
+
+Our project uses one data file called conflictPreCompute.csv.  It is located in the data
+directory of our project and is loaded using d3.csv.
+
+
+
