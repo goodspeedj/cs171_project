@@ -75,7 +75,7 @@ tbody tr:nth-child(odd) {
 .row, .header { clear: left; border: 1px solid gray;}
 .header { font-weight: bold; background-color: #F0F0F0; }
 .cell { float: left; overflow: hidden; white-space: nowrap; }
-.col-0 { width: 130px; }
+.col-0 { width: 150px; }
 .col-1 { width: 60px; }
 .col-2 { width: 140px; }
 .col-3 { width: 140px; }

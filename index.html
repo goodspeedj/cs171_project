@@ -58,12 +58,12 @@
           <tr>
             <th class="col-0">Country</th>
             <th class="col-1">Years</th>
-            <th class="col-2">Military expenditure (% of GDP)</th>
-            <th class="col-3">Unemployment; male (% of male labor force)</th>
-            <th class="col-4">GDP growth (annual %)</th>
-            <th class="col-5">GDP per capita (constant 2000 US$)</th>
+            <th class="col-2">GDP growth (annual %)</th>
+            <th class="col-3">GDP per capita (constant 2000 US$)</th>
+            <th class="col-4">Military expenditure (% of GDP)</th>
+            <th class="col-5">Inflation; GDP deflator (annual %)</th>
             <th class="col-6">Unemployment; total (% of total labor force)</th>
-            <th class="col-7">Inflation; GDP deflator (annual %)</th>
+            <th class="col-7">Unemployment; male (% of male labor force)</th>
           </tr>
         </thead>
         <tbody id="table-body">
@@ -82,7 +82,7 @@
       var data = "data/conflictPreCompute.csv";
 
       // economic indicators (y axis)
-      var indicators = ["Military expenditure (% of GDP)", "Unemployment; male (% of male labor force)", "GDP growth (annual %)", "GDP per capita (constant 2000 US$)","Unemployment; total (% of total labor force)","Inflation; GDP deflator (annual %)"];
+      var indicators = ["GDP growth (annual %)","GDP per capita (constant 2000 US$)","Military expenditure (% of GDP)","Inflation; GDP deflator (annual %)","Unemployment; total (% of total labor force)","Unemployment; male (% of male labor force)"];
 
       var margin = [60, 120, 60, 120];
       var width  = 1024 - margin[1] - margin[3];
