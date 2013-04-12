@@ -199,6 +199,13 @@ h3 {
   stroke-opacity: .65;
 }
 
+.black {
+  stroke: #000000;
+  stroke-width: 5px;
+  fill:none;
+  stroke-opacity: .75;
+}
+
 .EGY-Pre, .AUS-Pre {
   stroke: #7A0177;
   stroke-dasharray: 5,5;
