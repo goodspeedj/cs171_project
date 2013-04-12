@@ -158,6 +158,22 @@
       }
 
 
+      // Highlight the line 
+      function highlight(data) {
+
+        d3.selectAll("." + data.Code + "-" + data.Stage)
+          .attr("class","black");
+      }
+
+
+      function unhighlight(data) {
+        console.log(data);
+
+        d3.selectAll(".black")
+          .attr("class", function(d) { return d.Code + "-" + d.Stage; });        
+      }
+
+
 
 
       function selectConflict() {
