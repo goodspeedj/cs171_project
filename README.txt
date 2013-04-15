@@ -5,18 +5,18 @@ Jim Goodspeed
 Devin Shackle
 
 
-# ==========================================================================================
+# ==============================================================================================
 #
 # Running locally
 #
-# ==========================================================================================
+# ==============================================================================================
 
 Please note that to run this visualization locally you must run the Python SimpleHTTPServer:
 python -m SimpleHTTPServer 8888 &
 
 
 
-# ==========================================================================================
+# ==============================================================================================
 #
 # Code overview.  The model for the parallel coordinate graph was based on the Iris parallel
 # coordinate graph.
@@ -24,7 +24,7 @@ python -m SimpleHTTPServer 8888 &
 # Michael Bostock, "Edgar Anderson's Iris data set parallel coordinates," accessed April 1, 2013, 
 #   http://mbostock.github.io/d3/talk/20111116/iris-parallel.html.
 #
-# ==========================================================================================
+# ==============================================================================================
 
 function getSelected()
 	This function gets the selected item from the filter pull down 
