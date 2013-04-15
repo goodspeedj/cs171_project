@@ -24,9 +24,11 @@ th {
   background-color: #CCCCCC;
 }
 
-table tr {
-  border: 1px solid gray;
+table {
   padding: 1px;
+  height: 300px;
+  display: block;
+  overflow-y: auto;
 }
 
 tbody tr:nth-child(odd) {
