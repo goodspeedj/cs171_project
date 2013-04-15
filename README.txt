@@ -1,5 +1,5 @@
-cs171_project II
-================
+cs171_project III
+=================
 
 Jim Goodspeed
 Devin Shackle
@@ -19,7 +19,10 @@ python -m SimpleHTTPServer 8888 &
 # ==========================================================================================
 #
 # Code overview.  The model for the parallel coordinate graph was based on the Iris parallel
-# coordinate graph here: http://mbostock.github.io/d3/talk/20111116/iris-parallel.html
+# coordinate graph.
+#
+# Michael Bostock, "Edgar Anderson's Iris data set parallel coordinates," accessed April 1, 2013, 
+#   http://mbostock.github.io/d3/talk/20111116/iris-parallel.html.
 #
 # ==========================================================================================
 
@@ -27,10 +30,25 @@ function getSelected()
 	This function gets the selected item from the filter pull down 
 
 
+function getDesc()
+	This function will add the conflict description to the head of the parallel coordinate 
+	graph.
+
+
 function detailTable()
 	This function displays the data table below the parallel coordinate graph.  The function
 	builds the table rows and cells as new data is passed to it.  Old data is exited and 
 	removed from the stage.
+
+
+function highlight()
+	This function will highlight a corresponding line in the parallel coordinate graph when 
+	the same data record is moused over on the data table below.
+
+
+function unhighlight()
+	This function will return the line called out in the highlight function to its original
+	color, width and opacity.
 
 
 function selectConflict()
@@ -61,15 +79,18 @@ function selectConflict()
 
 
 function dragstart()
-	Function to register the index of the axis being moved
+	Function to register the index of the axis being moved.  This function was not modified from 
+	the original in the Michael Bostock example.
 
 
 function drag()
-	Function to drag the axis to a different order
+	Function to drag the axis to a different order.  This function was not modified from 
+	the original in the Michael Bostock example.
 
 
 function dragend()
-	Function to finish and re-order the axis
+	Function to finish and re-order the axis.  This function was not modified from the original 
+	in the Michael Bostock example.
 
 
 function redrawAxis()
