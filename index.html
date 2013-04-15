@@ -84,6 +84,8 @@
        // main data file
       var data = "data/conflictPreCompute.csv";
 
+      console.log(data);
+
       // economic indicators (y axis)
       var indicators = ["GDP % growth","GDPpCap","MilEx(% of GDP)","Inflation","Unempl","Unempl(Male)"];
 
@@ -158,21 +160,19 @@
       }
 
 
-      // Highlight the line 
+      // Highlight the line based on mouseover on the data table 
       function highlight(data) {
 
-        d3.selectAll("." + data.Code + "-" + data.Stage)
+        d3.selectAll("." + data.Code + "-" + data.Stage + "-" + data.Conf_Code)
           .attr("class","black");
       }
 
 
+      // turns off the highlighting
       function unhighlight(data) {
-        console.log(data);
-
         d3.selectAll(".black")
-          .attr("class", function(d) { return d.Code + "-" + d.Stage; });        
+          .attr("class", function(d) { return d.Code + "-" + d.Stage + "-" + d.Conf_Code; });        
       }
-
 
 
 
@@ -203,7 +203,7 @@
 
         d3.csv(data, function(fullData) {
 
-          console.log("selected: " + getSelected());
+          //console.log(fullData);
 
           // filter
           var conflicts = fullData.filter(function(row) {
@@ -239,13 +239,14 @@
             parent.removeChild(child);
           }
 
-          //console.log(conflicts);
           detailTable(conflicts);
 
           if (getSelected() != "Please choose a conflict (or all)") {
               addDesc(conflicts);
           }
           
+
+          //console.log(conflicts);
 
           // Create a scale and brush for each economic indicator
           indicators.forEach(function(d) {
@@ -297,7 +298,7 @@
             .enter().append("svg:path")
               .attr("d", path)
               .attr("d", path)
-              .attr("class", function(d) { return d.Code + "-" + d.Stage; });
+              .attr("class", function(d) { console.log(d.Conf_Code); return d.Code + "-" + d.Stage + "-" + d.Conf_Code; });
 
 
 
