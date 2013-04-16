@@ -298,7 +298,7 @@
             .enter().append("svg:path")
               .attr("d", path)
               .attr("d", path)
-              .attr("class", function(d) { console.log(d.Conf_Code); return d.Code + "-" + d.Stage + "-" + d.Conf_Code; });
+              .attr("class", function(d,i) { console.log(d.Conf_Code); return d.Code + "-" + d.Stage + "-" + d.Conf_Code + " " + "c" + i });
 
 
 
@@ -351,6 +351,7 @@
           }
 
 
+
           // used for dragging y axis
           function dragend(d) {
             x.domain(indicators).rangePoints([0, width]);
@@ -361,6 +362,9 @@
         });
 
       }
+
+      
+
 
 
       // not fully operational - maybe for project III

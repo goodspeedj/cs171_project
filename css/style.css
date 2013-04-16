@@ -170,6 +170,7 @@ h3 {
 
 .foreground path {
   fill: none;
+  stroke-width: 2.5px;
 }
 
 .foreground path.fade {
@@ -188,6 +189,8 @@ h3 {
   fill:none;
   stroke-opacity: .85;
 }
+
+/*
 
 .AUS-Pre-IW {
   stroke: #7A0177;
@@ -416,6 +419,98 @@ h3 {
   stroke-dasharray: 20,10,5,5,5,10;
   stroke-opacity: .65;
 }
+*/
+
+
+/*
+Base colors 1,4,7,10,13 are from Color Brewer  
+Variants are from workwithcolor.com/hsl-color-picker-01.html
+*/
+
+.c0{
+  stroke: #F07A7C;
+}
+
+.c1{
+  stroke: #E41A1C;
+}
+
+.c2{
+  stroke:#A31215;
+}
+
+.c3{
+  stroke:#72A9D5;
+}
+
+.c4{
+  stroke: #377EB8;
+}
+
+.c5 {
+  stroke: #275982;
+}
+
+.c6 {
+  stroke: #6DC16A;
+}
+
+.c7 {
+  stroke: #42973F;
+}
+
+.c8 {
+  stroke: #306C2D;
+}
+
+.c9 {
+  stroke: #BD88C6;
+}
+
+.c10 {
+  stroke: #984EA3;
+}
+
+.c11 {
+  stroke: #6D3875;
+}
+
+.c12 {
+  stroke: #FFAD5B;
+}
+
+.c13 {
+  stroke: #FF7F00;
+}
+
+.c14 {
+ stroke: #C56200;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .brush .extent {
   fill-opacity: .3;
