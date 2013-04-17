@@ -84,8 +84,6 @@
        // main data file
       var data = "data/conflictPreCompute.csv";
 
-      console.log(data);
-
       // economic indicators (y axis)
       var indicators = ["GDP % growth","GDPpCap","MilEx(% of GDP)","Inflation","Unempl","Unempl(Male)"];
 
@@ -143,7 +141,7 @@
         rows.enter()
             .append("tr")
             .on("mouseover", highlight)
-            .on("mouseout", unhighlight);
+            .on("mouseout", function(d,i) { return unhighlight(i); });
 
         // create a cell in each row for each column
         var cells = rows.selectAll("td")
@@ -169,9 +167,10 @@
 
 
       // turns off the highlighting
-      function unhighlight(data) {
+      function unhighlight(i) {
+        console.log(i);
         d3.selectAll(".black")
-          .attr("class", function(d) { return d.Code + "-" + d.Stage + "-" + d.Conf_Code; });        
+          .attr("class", function(d) { return d.Code + "-" + d.Stage + "-" + d.Conf_Code + " " + "c" + i; });        
       }
 
 
@@ -298,7 +297,7 @@
             .enter().append("svg:path")
               .attr("d", path)
               .attr("d", path)
-              .attr("class", function(d,i) { console.log(d.Conf_Code); return d.Code + "-" + d.Stage + "-" + d.Conf_Code + " " + "c" + i });
+              .attr("class", function(d,i) { return d.Code + "-" + d.Stage + "-" + d.Conf_Code + " " + "c" + i });
 
 
 

@@ -170,7 +170,7 @@ h3 {
 
 .foreground path {
   fill: none;
-  stroke-width: 2.5px;
+  /*stroke-width: 2.5px;*/
 }
 
 .foreground path.fade {
@@ -180,15 +180,9 @@ h3 {
 
 .legend {
   font-size: 14px;
-  font-style: oblique;
 }
 
-.black {
-  stroke: #000000;
-  stroke-width: 3px;
-  fill:none;
-  stroke-opacity: .85;
-}
+
 
 /*
 
@@ -429,88 +423,84 @@ Variants are from workwithcolor.com/hsl-color-picker-01.html
 
 .c0{
   stroke: #F07A7C;
+  stroke-width: 2.5px;
 }
 
 .c1{
   stroke: #E41A1C;
+  stroke-width: 2.5px;
 }
 
 .c2{
   stroke:#A31215;
+  stroke-width: 2.5px;
 }
 
 .c3{
   stroke:#72A9D5;
+  stroke-width: 2.5px;
 }
 
 .c4{
   stroke: #377EB8;
+  stroke-width: 2.5px;
 }
 
 .c5 {
   stroke: #275982;
+  stroke-width: 2.5px;
 }
 
 .c6 {
   stroke: #6DC16A;
+  stroke-width: 2.5px;
 }
 
 .c7 {
   stroke: #42973F;
+  stroke-width: 2.5px;
 }
 
 .c8 {
   stroke: #306C2D;
+  stroke-width: 2.5px;
 }
 
 .c9 {
   stroke: #BD88C6;
+  stroke-width: 2.5px;
 }
 
 .c10 {
   stroke: #984EA3;
+  stroke-width: 2.5px;
 }
 
 .c11 {
   stroke: #6D3875;
+  stroke-width: 2.5px;
 }
 
 .c12 {
   stroke: #FFAD5B;
+  stroke-width: 2.5px;
 }
 
 .c13 {
   stroke: #FF7F00;
+  stroke-width: 2.5px;
 }
 
 .c14 {
  stroke: #C56200;
+ stroke-width: 2.5px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.black {
+  stroke: #000000;
+  stroke-width: 5px;
+  stroke-opacity: .75;
+}
 
 .brush .extent {
   fill-opacity: .3;
