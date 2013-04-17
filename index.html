@@ -77,8 +77,21 @@
     <script type="text/javascript">
 
       /*
-        The code below for the parallel coordinates graph is based on the code for the Edgar Anderson's Iris
-        visualization found here: http://mbostock.github.com/d3/talk/20111116/iris-parallel.html
+        The code below for the parallel coordinates graph is based on the code by Michael Bostock in the Edgar 
+        Anderson's Iris visualization: http://mbostock.github.com/d3/talk/20111116/iris-parallel.html
+
+        Additional inspiration (though not code) was derived from the Nutrient Contents - Parallel Coordinates 
+        graph by Kai Chang: http://exposedata.com/parallel/
+
+
+        Citations:
+
+        Michael Bostock, “Edgar Anderson’s Iris data set parallel coordinates,” Gallery – mbostock / d3, 
+        accessed April 1, 2013, http://mbostock.github.io/d3/talk/20111116/iris-parallel.html
+ 
+        Kai Chang, “Nutrient Contents – Parallel Coordinates,” Expose Data, accessed April 1, 2013, 
+        http://exposedata.com/parallel/
+
        */
 
        // main data file
@@ -277,13 +290,13 @@
 
           // color lines in legend for each country
           legend.append("svg:line")
-              .attr("class", String)
-              .attr("x2", 50);
+              .attr("class", function(d,i) { return d.Code + "-" + d.Stage + "-" + d.Conf_Code + " " + "c" + i })
+              .attr("x2", 30);
 
 
           // country names in the legend
           legend.append("svg:text")
-              .attr("x", 60)
+              .attr("x", 50)
               .attr("dy", ".31em")
               .text(function(d) { return d; });
               //.on("click", detailTableFromLegend);
