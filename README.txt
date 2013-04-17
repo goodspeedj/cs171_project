@@ -1,8 +1,8 @@
 cs171_project III
 =================
 
-Jim Goodspeed
-Devin Shackle
+Jim Goodspeed - jgoodsp@fas.harvard.edu
+Devin Shackle - devin.shackle@fas.harvard.edu
 
 
 # ==============================================================================================
