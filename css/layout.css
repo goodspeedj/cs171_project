@@ -29,7 +29,6 @@ td {
 }
 
 #head {
-    background: #FFCCCC;
     position: relative;
     height: 75px;
     width: 100%;
@@ -37,7 +36,6 @@ td {
 }
 
 #text {
-    background: #CCE0FF;
     width: 60%;
     float: left;
     height: 360px;
@@ -46,14 +44,12 @@ td {
 }
 
 #map {
-    background: #CCF5CC;
     width: 30%;
     float: left;
     height: 360px;
 }
 
 #parcoord {
-    background: #CCCCB2;
     height: 500px;
     clear: both;
     margin-left:auto;
@@ -62,7 +58,6 @@ td {
 }
 
 #table {
-    background: #F5CCF5;
     height: 300px;
     margin-left:auto;
     margin-right:auto;
@@ -71,7 +66,6 @@ td {
 }
 
 #footer {
-    background: #FFD699;
     position: relative;
     display: inline;
     float: left;
