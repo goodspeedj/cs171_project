@@ -45,7 +45,7 @@
       <div id="conflict_desc"></div>
     </div>
 
-    <div id="map"><img src="globe.png"></img></div>
+    <div id="map"><img src="globe1.png"></img></div>
 
     <div id="parcoord"></div>
 
@@ -69,9 +69,11 @@
     </div>
 
     <div id="footer">
-        James Goodspeed - jgoodsp@fas.harvard.edu - 
-        Devin Shackle - devin.shackle@fas.harvard.edu<br />
-        References
+      <ul class="nav">
+        <li class="nav">James Goodspeed - jgoodsp@fas.harvard.edu</li>
+        <li class="nav">Devin Shackle - devin.shackle@fas.harvard.edu</li>
+      </ul>
+      References
     </div>
 
 
@@ -95,14 +97,14 @@
 
        */
 
-       // main data file
+      // main data file
       var data = "data/conflictPreCompute.csv";
 
       // economic indicators (y axis)
       var indicators = ["GDP % growth","GDPpCap","MilEx(% of GDP)","Inflation","Unempl","Unempl(Male)"];
 
       var margin = [60, 120, 60, 120];
-      var width  = 1024 - margin[1] - margin[3];
+      var width  = 1200 - margin[1] - margin[3];
       var height = 500 - margin[0] - margin[2];
 
       var x = d3.scale.ordinal().domain(indicators).rangePoints([0, width]);
@@ -128,7 +130,7 @@
         var div = document.createElement("div");
         
         div.id = "conflict_desc";
-        document.getElementById("top").appendChild(div);
+        document.getElementById("text").appendChild(div);
 
         var desc = d3.select("#conflict_desc")
           .data(data)
@@ -216,7 +218,7 @@
 
         d3.csv(data, function(fullData) {
 
-          //console.log(fullData);
+          console.log(fullData);
 
           // filter
           var conflicts = fullData.filter(function(row) {
@@ -286,7 +288,7 @@
               .data(countries)
             .enter().append("svg:g")
               .attr("class", "legend")
-              .attr("transform", function(d, i) { return "translate(800," + (i * 30 + 50) + ")"; });
+              .attr("transform", function(d, i) { return "translate(1000," + (i * 30 + 50) + ")"; });
 
 
           // color lines in legend for each country
