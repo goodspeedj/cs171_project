@@ -36,7 +36,7 @@ td {
 }
 
 #text {
-    width: 60%;
+    width: 40%;
     float: left;
     height: 360px;
     padding-left: 40px;
@@ -44,9 +44,11 @@ td {
 }
 
 #map {
-    width: 30%;
+    background: #f0f0f0;
+    width: 40%;
     float: left;
     height: 360px;
+    align: left;
 }
 
 #parcoord {
@@ -102,6 +104,12 @@ a.nav {
   padding-right: 10px;
   padding-left: 10px;
   text-decoration: none;
+}
+
+path {
+  stroke: white;
+  stroke-width: 0.25px;
+  fill: gray;
 }
 
 .indicator {
@@ -230,4 +238,19 @@ a.nav {
 .invert {
   background: #1F1F1F;
   color: #DCDCCC;
+}
+
+.background {
+  fill: none;
+  pointer-events: all;
+}
+
+#states {
+  fill: #aaa;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+#states .active {
+  fill: orange;
 }

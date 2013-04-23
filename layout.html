@@ -8,6 +8,7 @@
     <!-- D3 Libraries -->
     <script type="text/javascript" src="js/d3.v3.min.js"></script>
     <script type="text/javascript" src="js/d3.csv.js"></script>
+    <script type="text/javascript" src="js/topojson.v0.min.js"></script>
   </head>
 
   <body onload="selectConflict();">
@@ -45,7 +46,7 @@
       <div id="conflict_desc"></div>
     </div>
 
-    <div id="map"><img src="globe1.png"></img></div>
+    <div id="map"></div>
 
     <div id="parcoord"></div>
 
@@ -104,16 +105,101 @@
       var indicators = ["GDP % growth","GDPpCap","MilEx(% of GDP)","Inflation","Unempl","Unempl(Male)"];
 
       var margin = [60, 120, 60, 120];
-      var width  = 1200 - margin[1] - margin[3];
-      var height = 500 - margin[0] - margin[2];
+      var widthPC  = 1200 - margin[1] - margin[3];
+      var heightPC = 500 - margin[0] - margin[2];
 
-      var x = d3.scale.ordinal().domain(indicators).rangePoints([0, width]);
+      var x = d3.scale.ordinal().domain(indicators).rangePoints([0, widthPC]);
       var y = {};
 
       var line = d3.svg.line();
       var axis = d3.svg.axis().orient("left");
       var foreground;
       var filterData = new Array();
+
+      var widthMap = 600;
+      var heightMap = 360;
+
+      var projection = d3.geo.mercator()
+          .center([0,5])
+          .scale(90)
+          .rotate([-300, 0]);
+
+      var svgMap = d3.select("#map").append("svg")
+          .attr("width", widthMap)
+          .attr("height", heightMap);
+
+      var pathMap = d3.geo.path().projection(projection);
+
+      var gMap = svgMap.append("g");
+
+      d3.json("data/world-50m.json", function(error, topology) {
+          gMap.selectAll("path")
+          .data(topojson.object(topology, topology.objects.countries)
+          .geometries)
+          .enter()
+          .append("path")
+          .attr("d", pathMap)
+      });
+
+
+
+      /* Map code
+      var widthMap = 500;
+      var heightMap = 360;
+      var centered;
+
+      var pathMap = d3.geo.path();
+
+      var svgMap = d3.select("#map").append("svg")
+          .attr("width", widthMap)
+          .attr("height", heightMap);
+
+      svgMap.append("rect")
+          .attr("class", "background")
+          .attr("width", widthMap)
+          .attr("height", heightMap)
+          .on("click", click);
+
+      var gMap = svgMap.append("g")
+          .attr("id", "states");
+
+      d3.json("data/readme.json", function(json) {
+        gMap.selectAll("path")
+            .data(json.features)
+          .enter().append("path")
+            .attr("d", pathMap)
+            .on("click", click);
+      });
+
+      */
+
+
+
+
+      function click(d) {
+        var x, y, k;
+
+        if (d && centered !== d) {
+          var centroid = pathMap.centroid(d);
+          x = centroid[0];
+          y = centroid[1];
+          k = 4;
+          centered = d;
+        } else {
+          x = widthMap / 2;
+          y = heightMap / 2;
+          k = 1;
+          centered = null;
+        }
+
+        gMap.selectAll("path")
+            .classed("active", centered && function(d) { return d === centered; });
+
+        gMap.transition()
+            .duration(1000)
+            .attr("transform", "translate(" + widthMap / 2 + "," + heightMap / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+            .style("stroke-width", 1.5 / k + "px");
+      }
 
 
       // Gets the selected item from the pull down for the filter
@@ -184,11 +270,9 @@
 
       // turns off the highlighting
       function unhighlight(i) {
-        console.log(i);
         d3.selectAll(".black")
           .attr("class", function(d) { return d.Code + "-" + d.Stage + "-" + d.Conf_Code + " " + "c" + i; });        
       }
-
 
 
       function selectConflict() {
@@ -200,16 +284,16 @@
           parent.removeChild(child);
 
           var svg = d3.select("#parcoord").append("svg:svg")
-              .attr("width", width + margin[1] + margin[3])
-              .attr("height", height + margin[0] + margin[2])
+              .attr("width", widthPC + margin[1] + margin[3])
+              .attr("height", heightPC + margin[0] + margin[2])
               .attr("id", "container")
             .append("svg:g")
               .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
         }
         else {
             var svg = d3.select("#parcoord").append("svg:svg")
-                .attr("width", width + margin[1] + margin[3])
-                .attr("height", height + margin[0] + margin[2])
+                .attr("width", widthPC + margin[1] + margin[3])
+                .attr("height", heightPC + margin[0] + margin[2])
                 .attr("id", "container")
               .append("svg:g")
                 .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
@@ -271,7 +355,7 @@
             // scale
             y[d] = d3.scale.linear()
                 .domain(d3.extent(conflicts, function(p) { return +p[d]; }))
-                .range([height, 0]);
+                .range([heightPC, 0]);
 
             // brush
             y[d].brush = d3.svg.brush(conflicts)
@@ -369,7 +453,7 @@
 
           // used for dragging y axis
           function dragend(d) {
-            x.domain(indicators).rangePoints([0, width]);
+            x.domain(indicators).rangePoints([0, widthPC]);
             var t = d3.transition().duration(500);
             t.selectAll(".indicator").attr("transform", function(d) { return "translate(" + x(d) + ")"; });
             t.selectAll(".foreground path").attr("d", path);

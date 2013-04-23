@@ -15,6 +15,17 @@ Please note that to run this visualization locally you must run the Python Simpl
 python -m SimpleHTTPServer 8888 &
 
 
+# ==============================================================================================
+#
+# The map implementation requires TopoJSON which in turn requires Node.js.  
+#
+# Node.js can be downloaded and installed from: http://nodejs.org/download/
+#
+# To install TopoJSON open the Node.js command prompt and type: npm install -g topojson
+#
+# ==============================================================================================
+
+
 
 # ==============================================================================================
 #
