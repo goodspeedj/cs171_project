@@ -185,38 +185,6 @@
       }
 
 
-
-      /* Map code
-      var widthMap = 500;
-      var heightMap = 360;
-      var centered;
-
-      var pathMap = d3.geo.path();
-
-      var svgMap = d3.select("#map").append("svg")
-          .attr("width", widthMap)
-          .attr("height", heightMap);
-
-      svgMap.append("rect")
-          .attr("class", "background")
-          .attr("width", widthMap)
-          .attr("height", heightMap)
-          .on("click", click);
-
-      var gMap = svgMap.append("g")
-          .attr("id", "states");
-
-      d3.json("data/readme.json", function(json) {
-        gMap.selectAll("path")
-            .data(json.features)
-          .enter().append("path")
-            .attr("d", pathMap)
-            .on("click", click);
-      });
-
-      */
-
-
       // Gets the selected item from the pull down for the filter
       function getSelected() {
         var list = document.getElementById("list");
