@@ -118,6 +118,7 @@
 
       var widthMap = 600;
       var heightMap = 360;
+      var centered;
 
       var projection = d3.geo.mercator()
           .center([0,0])
@@ -127,6 +128,12 @@
       var svgMap = d3.select("#map").append("svg")
           .attr("width", widthMap)
           .attr("height", heightMap);
+
+      svgMap.append("rect")
+          .attr("class", "map-backgound")
+          .attr("width", widthMap)
+          .attr("height", heightMap)
+          .on("click", click);
 
       var pathMap = d3.geo.path().projection(projection);
 
@@ -140,7 +147,42 @@
           .enter()
           .append("path")
           .attr("d", pathMap)
+          .on("click", click)
       });
+
+
+      function click(d) {
+        var x, y, k;
+
+        // zoom in
+        if (d && centered !== d) {
+          var centroid = pathMap.centroid(d);
+          x = centroid[0];
+          y = centroid[1];
+          k = 4;
+          centered = d;
+        } 
+
+        // zoom out
+        else {
+          //x = widthMap / 2;
+          x = 490;
+          y = heightMap / 2;
+          k = 1;
+          centered = null;
+
+          console.log(x);
+        }
+
+        gMap.selectAll("path")
+            .classed("active", centered && function(d) { return d === centered; });
+
+        gMap.transition()
+            .duration(1000)
+            .attr("transform", "translate(" + widthMap / 2 + "," + heightMap / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+            .style("stroke-width", 1.5 / k + "px");
+
+      }
 
 
 
@@ -173,34 +215,6 @@
       });
 
       */
-
-
-
-
-      function click(d) {
-        var x, y, k;
-
-        if (d && centered !== d) {
-          var centroid = pathMap.centroid(d);
-          x = centroid[0];
-          y = centroid[1];
-          k = 4;
-          centered = d;
-        } else {
-          x = widthMap / 2;
-          y = heightMap / 2;
-          k = 1;
-          centered = null;
-        }
-
-        gMap.selectAll("path")
-            .classed("active", centered && function(d) { return d === centered; });
-
-        gMap.transition()
-            .duration(1000)
-            .attr("transform", "translate(" + widthMap / 2 + "," + heightMap / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
-            .style("stroke-width", 1.5 / k + "px");
-      }
 
 
       // Gets the selected item from the pull down for the filter
@@ -302,8 +316,6 @@
           
 
         d3.csv(data, function(fullData) {
-
-          console.log(fullData);
 
           // filter
           var conflicts = fullData.filter(function(row) {

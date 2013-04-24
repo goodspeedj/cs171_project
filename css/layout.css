@@ -28,6 +28,11 @@ td {
   padding: 3px;
 }
 
+rect {
+  fill: none;
+  pointer-events: all;
+}
+
 #head {
     position: relative;
     height: 75px;
@@ -110,6 +115,12 @@ path {
   stroke: white;
   stroke-width: 0.25px;
   fill: gray;
+}
+
+
+
+.active {
+  fill: orange;
 }
 
 .indicator {
@@ -240,17 +251,3 @@ path {
   color: #DCDCCC;
 }
 
-.background {
-  fill: none;
-  pointer-events: all;
-}
-
-#states {
-  fill: #aaa;
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
-
-#states .active {
-  fill: orange;
-}
