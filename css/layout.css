@@ -28,7 +28,7 @@ td {
   padding: 3px;
 }
 
-rect {
+#mapbg {
   fill: none;
   pointer-events: all;
 }

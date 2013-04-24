@@ -130,7 +130,7 @@
           .attr("height", heightMap);
 
       svgMap.append("rect")
-          .attr("class", "map-backgound")
+          .attr("id", "mapbg")
           .attr("width", widthMap)
           .attr("height", heightMap)
           .on("click", click);
@@ -403,7 +403,7 @@
             .append("svg:text")
               .attr("text-anchor", "middle")
               .attr("y", -9)
-              .attr("class", "axis-title")
+              //.attr("class", "axis-title")
               .text(String);
 
 
