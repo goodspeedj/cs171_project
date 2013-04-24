@@ -44,11 +44,11 @@ td {
 }
 
 #map {
-    background: #f0f0f0;
-    width: 40%;
+    width: 600px;
     float: left;
     height: 360px;
-    align: left;
+    margin: 0;
+    padding: 0;
 }
 
 #parcoord {

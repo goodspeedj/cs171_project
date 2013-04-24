@@ -120,9 +120,9 @@
       var heightMap = 360;
 
       var projection = d3.geo.mercator()
-          .center([0,5])
+          .center([0,0])
           .scale(90)
-          .rotate([-300, 0]);
+          .rotate([0, 0]);
 
       var svgMap = d3.select("#map").append("svg")
           .attr("width", widthMap)
@@ -130,7 +130,8 @@
 
       var pathMap = d3.geo.path().projection(projection);
 
-      var gMap = svgMap.append("g");
+      var gMap = svgMap.append("g")
+          .attr("transform", "translate(-190,0)");
 
       d3.json("data/world-50m.json", function(error, topology) {
           gMap.selectAll("path")
