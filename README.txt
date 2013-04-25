@@ -29,11 +29,14 @@ python -m SimpleHTTPServer 8888 &
 
 # ==============================================================================================
 #
-# Code overview.  The model for the parallel coordinate graph was based on the Iris parallel
-# coordinate graph.
+# The model for the parallel coordinate graph was based on the Iris parallel coordinate graph.
 #
 # Michael Bostock, "Edgar Anderson's Iris data set parallel coordinates," accessed April 1, 2013, 
 #   http://mbostock.github.io/d3/talk/20111116/iris-parallel.html.
+#
+# The model for the world map was based on
+#
+# http://techslides.com/d3-world-maps-tooltips-zooming-and-queue/
 #
 # ==============================================================================================
 
