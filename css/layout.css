@@ -87,6 +87,36 @@ td {
     padding: 0 5px;
 }
 
+.hidden { 
+  display: none; 
+}
+
+div.tooltip {
+  color: #222; 
+  font-size: 11px;
+  font-family: sans-serif;
+  background: #fff; 
+  padding: .5em; 
+  text-shadow: #f5f5f5 0 1px 0;
+  border-radius: 2px; 
+  box-shadow: 0px 0px 2px 0px #a6a6a6; 
+  opacity: 0.9; 
+  position: absolute;
+}
+
+.country {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 1px;
+  stroke-linejoin: round;
+  cursor: pointer;
+}
+
+rect {
+  fill: none;
+  pointer-events: all;
+}
+
 ul.list {
   border: 1px solid #CFCFCF;
   background-color: #F9F9F9;

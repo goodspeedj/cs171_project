@@ -8,7 +8,8 @@
     <!-- D3 Libraries -->
     <script type="text/javascript" src="js/d3.v3.min.js"></script>
     <script type="text/javascript" src="js/d3.csv.js"></script>
-    <script type="text/javascript" src="js/topojson.v0.min.js"></script>
+    <script type="text/javascript" src="js/queue.v1.min.js"></script>
+    <script type="text/javascript" src="js/topojson.js"></script>
   </head>
 
   <body onload="selectConflict();">
@@ -116,6 +117,121 @@
       var foreground;
       var filterData = new Array();
 
+
+
+
+
+      var widthMap = 600;
+      var heightMap = 360;
+      var active;
+
+      var color = d3.scale.category10();
+
+      var projection = d3.geo.mercator()
+          .center([0,0])
+          .scale(100)
+          .rotate([0, 0]);
+          //.translate([480, 300])
+          //.scale(970);
+
+      var pathMap = d3.geo.path()
+          .projection(projection);
+
+      var svgMap = d3.select("#map").append("svg")
+          .attr("width", widthMap)
+          .attr("height", heightMap);
+
+      svgMap.append("rect")
+        .attr("width", widthMap)
+        .attr("height", heightMap)
+        .on("click", reset);
+
+      var gMap = svgMap.append("g")
+          .attr("transform", "translate(-190,0)");
+
+      function click(d) {
+        if (active === d) return reset();
+          
+        gMap.selectAll(".active").classed("active", false);
+        d3.select(this).classed("active", active = d);
+
+        var b = pathMap.bounds(d);
+
+        /*
+        gMap.transition()
+            .duration(1000)
+            .attr("transform", "translate(" + widthMap / 2 + "," + heightMap / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+            .style("stroke-width", 1.5 / k + "px");
+        */
+
+        
+        gMap.transition()
+            .duration(750)
+            .attr("transform","translate(" + projection.translate() + ")" + "scale(" + .95 / Math.max((b[1][0] - b[0][0]) / widthMap, (b[1][1] - b[0][1]) / heightMap) + ")"
+            + "translate(" + -(b[1][0] + b[0][0]) / 2 + "," + -(b[1][1] + b[0][1]) / 2 + ")");        
+      }
+
+      function reset() {
+        gMap.selectAll(".active").classed("active", active = false);
+        gMap.transition().duration(750).attr("transform", "translate(-190,0)");
+      }
+
+      var tooltip = d3.select("#map").append("div")
+        .attr("class", "tooltip");
+
+      queue()
+          .defer(d3.json, "data/world-50m.json")
+          .defer(d3.tsv, "data/world-country-names.tsv")
+          .await(ready);
+
+      function ready(error, world, names) {
+
+        var countries = topojson.object(world, world.objects.countries).geometries,
+            neighbors = topojson.neighbors(world, countries),
+            i = -1,
+            n = countries.length;
+
+        countries.forEach(function(d) { 
+          var tryit = names.filter(function(n) { return d.id == n.id; })[0];
+          if (typeof tryit === "undefined"){
+            d.name = "Undefined";
+            //console.log(d);
+          } 
+          else {
+            d.name = tryit.name; 
+          }
+        });
+
+      var country = gMap.selectAll(".country").data(countries);
+
+        country
+         .enter()
+          .insert("path")
+          .attr("class", "country")    
+            .attr("title", function(d,i) { return d.name; })
+            .attr("d", pathMap)
+            .on("click", click);
+            //.style("fill", function(d, i) { return color(d.color = d3.max(neighbors[i], function(n) { return countries[n].color; }) + 1 | 0); });
+
+          //Show/hide tooltip
+          country
+            .on("mousemove", function(d,i) {
+              var mouse = d3.mouse(svgMap.node()).map( function(d) { return parseInt(d); } );
+
+              tooltip
+                .classed("hidden", false)
+                .attr("style", "left:" + (mouse[0]+550) + "px;top:" + (mouse[1]+50) + "px")
+                .html(d.name)
+            })
+            .on("mouseout",  function(d,i) {
+              tooltip.classed("hidden", true)
+            });
+
+      }
+
+
+
+/*
       var widthMap = 600;
       var heightMap = 360;
       var centered;
@@ -151,6 +267,7 @@
       });
 
 
+
       function click(d) {
         var x, y, k;
 
@@ -183,6 +300,7 @@
             .style("stroke-width", 1.5 / k + "px");
 
       }
+*/
 
 
       // Gets the selected item from the pull down for the filter
