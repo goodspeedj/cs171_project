@@ -217,13 +217,13 @@
           }
         });
 
-      var country = gMap.selectAll(".country").data(countries);
+        var country = gMap.selectAll(".country").data(countries);
 
         country
          .enter()
           .insert("path")
           .attr("class", "country")    
-            .attr("title", function(d,i) { return d.name; })
+            .attr("title", function(d,i) { return d.name; })  // country name
             .attr("d", pathMap)
             .on("click", click);
 
@@ -282,10 +282,14 @@
             .selectAll("tr")
             .data(data);
 
+        //var nation = gMap.selectAll(".country").data(countries);
+        //console.log("nation: " + nation);
+
         rows.enter()
             .append("tr")
             .on("mouseover", highlight)
             .on("mouseout", function(d,i) { return unhighlight(i); });
+            //.on("click", click);
 
         // create a cell in each row for each column
         var cells = rows.selectAll("td")
