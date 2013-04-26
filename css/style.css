@@ -152,6 +152,26 @@ a.nav {
   text-decoration: none;
 }
 
+a:link {
+  text-decoration: none;
+  color: #2E2E2E;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #3E193E;
+}
+
+a:active {
+  text-decoration: none;
+  color: #2E2E2E;
+}
+
+a:hover {
+  text-decoration: underline; color: red;
+  color: #2E2E2E;
+}
+
 .italic {
   font-style: italic;
 }
