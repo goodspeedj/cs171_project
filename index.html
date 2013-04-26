@@ -2,60 +2,56 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <title>CS171 Project III: Jim Goodspeed &amp; Devin Shackle</title>
+    <link type="text/css" rel="stylesheet" href="css/layout.css"/>
 
     <!-- D3 Libraries -->
     <script type="text/javascript" src="js/d3.v3.min.js"></script>
     <script type="text/javascript" src="js/d3.csv.js"></script>
-
+    <script type="text/javascript" src="js/queue.v1.min.js"></script>
+    <script type="text/javascript" src="js/topojson.js"></script>
   </head>
-  <body onload="selectConflict();">
-    <header>
-      <div id="header">
-        <p class="title">The Economics of War</p>
-        CS 171/CSCI E-64: Visualization<br />
-        Project III
-      </div>
-      <div id="name">
-        James Goodspeed - jgoodsp@fas.harvard.edu<br />
-        Devin Shackle - devin.shackle@fas.harvard.edu
-      </div>
-    </header>
 
-    <div id="top">
-      <div id="instructions">
-       <p>This visualization will allow you to explore certain economic factors of countries involved in recent conflicts. Comparing the economic well-being of countries before, during, and after significant armed conflicts will show how their involvement effected their economies. Please select a conflict from the drop-down menu to begin and enjoy exploring <strong>The Economics of War</strong>.  <a href="video.html">Video Introduction</a></p> 
+  <body onload="selectConflict();">
+    <div id="head">
+      <h2>The Economics of War</h2>
+      <div id="dropdown">
+        <form>
+          <select id="list" onchange="selectConflict()">
+            <option>Please choose a conflict (or all)</option>
+            <option>2006 Lebanon War</option>
+            <option>Indo-Pakistani War of 1965</option>
+            <option>Indo-Pakistani War of 1971</option>
+            <option>Iran-Iraq War</option>
+            <option>Iraq War</option>
+            <option>Kargil War</option>
+            <option>Libyan-Egyptian War</option>
+            <option>Siachen Conflict</option>
+            <option>Six-Day War</option>
+            <option>Turkish Invasion of Cyprus</option>
+            <option>Yom Kippur War</option>
+          </select>
+          <p id="description"></p>
+        </form>
+      </div>
+    </div>
+
+    <div id="text">
+      <div id="intro">
+        <p>This visualization will allow you to explore certain economic factors of countries involved in recent conflicts. 
+           Comparing the economic well-being of countries before, during, and after significant armed conflicts will show 
+           how their involvement effected their economies. Please select a conflict from the drop-down menu to begin and 
+           enjoy exploring <strong>The Economics of War</strong>.  <a href="video.html">Video Introduction</a>
+        </p> 
       </div>
       <div id="conflict_desc"></div>
     </div>
 
-    <div id="dropdown">
-      <form>
-        <select id="list" onchange="selectConflict()">
+    <div id="map"></div>
 
-          <option>Please choose a conflict (or all)</option>
-          <option>2006 Lebanon War</option>
-          <option>Indo-Pakistani War of 1965</option>
-          <option>Indo-Pakistani War of 1971</option>
-          <option>Iran-Iraq War</option>
-          <option>Iraq War</option>
-          <option>Kargil War</option>
-          <option>Libyan-Egyptian War</option>
-          <option>Siachen Conflict</option>
-          <option>Six-Day War</option>
-          <option>Turkish Invasion of Cyprus</option>
-          <option>Yom Kippur War</option>
-        </select>
-        <p id="description"></p>
-      </form>
-    </div>
+    <div id="parcoord"></div>
 
-    <!-- Place holder for the parallel coordinates graph -->
-    <div id="vis"></div>
-
-    <!-- Place holder for detail table -->
-    <div id="grid">
+    <div id="table">
       <table id="detail-table">
         <thead>
           <tr>
@@ -73,7 +69,16 @@
         </tbody>
       </table>
     </div>
-    
+
+    <div id="footer">
+      <ul class="nav">
+        <li class="nav">James Goodspeed - jgoodsp@fas.harvard.edu</li>
+        <li class="nav">Devin Shackle - devin.shackle@fas.harvard.edu</li>
+      </ul>
+      <a href="citations.html">Citations</a>
+    </div>
+
+
     <script type="text/javascript">
 
       /*
@@ -82,6 +87,12 @@
 
         Additional inspiration (though not code) was derived from the Nutrient Contents - Parallel Coordinates 
         graph by Kai Chang: http://exposedata.com/parallel/
+
+        The code for the map is based on the D3 World Maps: Tooltips, Zooming, and Queue and the click-to-zoom
+        via transformation example by Mike Bostock
+
+        http://techslides.com/d3-world-maps-tooltips-zooming-and-queue/
+        http://bl.ocks.org/mbostock/2206590
 
 
         Citations:
@@ -92,25 +103,145 @@
         Kai Chang, “Nutrient Contents – Parallel Coordinates,” Expose Data, accessed April 1, 2013, 
         http://exposedata.com/parallel/
 
+        "D3 World Maps: Tooltips, Zooming, and Queue," Techslides, accessed April 24, 2013, 
+        http://techslides.com/d3-world-maps-tooltips-zooming-and-queue/
+
+        Michael Bostock, "click-to-zoom via transformation," Gallery - mbostock / d3, accessed April 23, 2013,
+        http://bl.ocks.org/mbostock/2206590
+
        */
 
-       // main data file
+      // main data file
       var data = "data/conflictPreCompute.csv";
 
       // economic indicators (y axis)
       var indicators = ["GDP % growth","GDPpCap","MilEx(% of GDP)","Inflation","Unempl","Unempl(Male)"];
 
       var margin = [60, 120, 60, 120];
-      var width  = 1024 - margin[1] - margin[3];
-      var height = 500 - margin[0] - margin[2];
+      var widthPC  = 1200 - margin[1] - margin[3];
+      var heightPC = 500 - margin[0] - margin[2];
 
-      var x = d3.scale.ordinal().domain(indicators).rangePoints([0, width]);
+      var x = d3.scale.ordinal().domain(indicators).rangePoints([0, widthPC]);
       var y = {};
 
       var line = d3.svg.line();
       var axis = d3.svg.axis().orient("left");
       var foreground;
       var filterData = new Array();
+
+
+
+
+
+      var widthMap = 600;
+      var heightMap = 360;
+      var active;
+
+      var color = d3.scale.category10();
+
+      var projection = d3.geo.mercator()
+          .center([0,0])
+          .scale(85)
+          .rotate([0, 0]);
+          //.translate([480, 300])
+          //.scale(970);
+
+      var pathMap = d3.geo.path()
+          .projection(projection);
+
+      var svgMap = d3.select("#map").append("svg")
+          .attr("width", widthMap)
+          .attr("height", heightMap);
+
+      svgMap.append("rect")
+        .attr("width", widthMap)
+        .attr("height", heightMap)
+        .on("click", reset);
+
+      var gMap = svgMap.append("g")
+          .attr("transform", "translate(-190,0)");
+
+
+      // function to zoom in on a country in the map
+      function click(d) {
+        console.log(d);
+        if (active === d) return reset();
+          
+        gMap.selectAll(".active").classed("active", false);
+        d3.select(this).classed("active", active = d);
+
+        var centroid = pathMap.centroid(d);
+        var x = centroid[0];
+        var y = centroid[1];
+        var k = 4;
+
+        gMap.transition()
+            .duration(1000)
+            .attr("transform", "translate(" + widthMap / 2 + "," + heightMap / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+            .style("stroke-width", 1.5 / k + "px");
+     
+      }
+
+
+      // zooms the map back out
+      function reset() {
+        gMap.selectAll(".active").classed("active", active = false);
+        gMap.transition().duration(750).attr("transform", "translate(-190,0)");
+      }
+
+
+      var tooltip = d3.select("#map").append("div")
+        .attr("class", "tooltip");
+
+      queue()
+          .defer(d3.json, "data/world-50m.json")
+          .defer(d3.tsv, "data/world-country-names.tsv")
+          .await(ready);
+
+
+
+      function ready(error, world, names) {
+
+        var countries = topojson.object(world, world.objects.countries).geometries,
+            neighbors = topojson.neighbors(world, countries),
+            i = -1,
+            n = countries.length;
+
+        countries.forEach(function(d) { 
+          var tryit = names.filter(function(n) { return d.id == n.id; })[0];
+          if (typeof tryit === "undefined"){
+            d.name = "Undefined";
+          } 
+          else {
+            d.name = tryit.name; 
+          }
+        });
+
+        var country = gMap.selectAll(".country").data(countries);
+
+        country
+         .enter()
+          .insert("path")
+          .attr("class", "country")    
+            .attr("title", function(d,i) { return d.name; })  // country name
+            .attr("d", pathMap)
+            .on("click", click);
+
+          //Show/hide tooltip
+          country
+            .on("mousemove", function(d,i) {
+              var mouse = d3.mouse(svgMap.node()).map( function(d) { return parseInt(d); } );
+
+              tooltip
+                .classed("hidden", false)
+                .attr("style", "left:" + (mouse[0]+550) + "px;top:" + (mouse[1]+50) + "px")
+                .html(d.name)
+            })
+            .on("mouseout",  function(d,i) {
+              tooltip.classed("hidden", true)
+            });
+
+      }
 
 
       // Gets the selected item from the pull down for the filter
@@ -127,7 +258,7 @@
         var div = document.createElement("div");
         
         div.id = "conflict_desc";
-        document.getElementById("top").appendChild(div);
+        document.getElementById("text").appendChild(div);
 
         var desc = d3.select("#conflict_desc")
           .data(data)
@@ -151,10 +282,14 @@
             .selectAll("tr")
             .data(data);
 
+        //var nation = gMap.selectAll(".country").data(countries);
+        //console.log("nation: " + nation);
+
         rows.enter()
             .append("tr")
             .on("mouseover", highlight)
             .on("mouseout", function(d,i) { return unhighlight(i); });
+            //.on("click", click);
 
         // create a cell in each row for each column
         var cells = rows.selectAll("td")
@@ -181,32 +316,30 @@
 
       // turns off the highlighting
       function unhighlight(i) {
-        console.log(i);
         d3.selectAll(".black")
           .attr("class", function(d) { return d.Code + "-" + d.Stage + "-" + d.Conf_Code + " " + "c" + i; });        
       }
-
 
 
       function selectConflict() {
 
         // Redraw
         if (document.getElementById("container")) {
-          var parent = document.getElementById("vis");
+          var parent = document.getElementById("parcoord");
           var child = document.getElementById("container");
           parent.removeChild(child);
 
-          var svg = d3.select("#vis").append("svg:svg")
-              .attr("width", width + margin[1] + margin[3])
-              .attr("height", height + margin[0] + margin[2])
+          var svg = d3.select("#parcoord").append("svg:svg")
+              .attr("width", widthPC + margin[1] + margin[3])
+              .attr("height", heightPC + margin[0] + margin[2])
               .attr("id", "container")
             .append("svg:g")
               .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
         }
         else {
-            var svg = d3.select("#vis").append("svg:svg")
-                .attr("width", width + margin[1] + margin[3])
-                .attr("height", height + margin[0] + margin[2])
+            var svg = d3.select("#parcoord").append("svg:svg")
+                .attr("width", widthPC + margin[1] + margin[3])
+                .attr("height", heightPC + margin[0] + margin[2])
                 .attr("id", "container")
               .append("svg:g")
                 .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
@@ -214,8 +347,6 @@
           
 
         d3.csv(data, function(fullData) {
-
-          //console.log(fullData);
 
           // filter
           var conflicts = fullData.filter(function(row) {
@@ -239,7 +370,7 @@
 
           
           if (document.getElementById("conflict_desc")) {
-            var parent = document.getElementById("top");
+            var parent = document.getElementById("text");
             var child = document.getElementById("conflict_desc");
             parent.removeChild(child);
           }
@@ -268,7 +399,7 @@
             // scale
             y[d] = d3.scale.linear()
                 .domain(d3.extent(conflicts, function(p) { return +p[d]; }))
-                .range([height, 0]);
+                .range([heightPC, 0]);
 
             // brush
             y[d].brush = d3.svg.brush(conflicts)
@@ -285,7 +416,7 @@
               .data(countries)
             .enter().append("svg:g")
               .attr("class", "legend")
-              .attr("transform", function(d, i) { return "translate(800," + (i * 30 + 50) + ")"; });
+              .attr("transform", function(d, i) { return "translate(1000," + (i * 30 + 50) + ")"; });
 
 
           // color lines in legend for each country
@@ -335,7 +466,7 @@
             .append("svg:text")
               .attr("text-anchor", "middle")
               .attr("y", -9)
-              .attr("class", "axis-title")
+              //.attr("class", "axis-title")
               .text(String);
 
 
@@ -366,7 +497,7 @@
 
           // used for dragging y axis
           function dragend(d) {
-            x.domain(indicators).rangePoints([0, width]);
+            x.domain(indicators).rangePoints([0, widthPC]);
             var t = d3.transition().duration(500);
             t.selectAll(".indicator").attr("transform", function(d) { return "translate(" + x(d) + ")"; });
             t.selectAll(".foreground path").attr("d", path);
@@ -443,5 +574,6 @@
       }
 
     </script>
+
   </body>
 </html>
