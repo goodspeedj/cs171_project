@@ -34,9 +34,14 @@ python -m SimpleHTTPServer 8888 &
 # Michael Bostock, "Edgar Anderson's Iris data set parallel coordinates," accessed April 1, 2013, 
 #   http://mbostock.github.io/d3/talk/20111116/iris-parallel.html.
 #
-# The model for the world map was based on
+# The code for the map is based on the D3 World Maps: Tooltips, Zooming, and Queue and the click-to-zoom
+# via transformation example by Mike Bostock
 #
-# http://techslides.com/d3-world-maps-tooltips-zooming-and-queue/
+# "D3 World Maps: Tooltips, Zooming, and Queue," Techslides, accessed April 24, 2013, 
+#   http://techslides.com/d3-world-maps-tooltips-zooming-and-queue/
+#
+# Michael Bostock, "click-to-zoom via transformation," Gallery - mbostock / d3, accessed April 23, 2013,
+#   http://bl.ocks.org/mbostock/2206590
 #
 # ==============================================================================================
 
