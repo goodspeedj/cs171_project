@@ -165,9 +165,14 @@
       // function to zoom in on a country in the map
       function click(d) {
         console.log(d);
+
+        // if already active clicking will de-activate
         if (active === d) return reset();
           
+        // clicking a second country while zoomed in will de-activate (un-highlight) the first
         gMap.selectAll(".active").classed("active", false);
+
+        // highlights (fills) the country clicked
         d3.select(this).classed("active", active = d);
 
         var centroid = pathMap.centroid(d);
@@ -354,6 +359,15 @@
               return fullData;
             }
             else {
+              
+
+              if(getSelected() == "2006 Lebanon War") {
+                console.log("here i am");
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-5070, -1800)scale(10)");
+
+              }
               return row["Conflict"] == getSelected();
             }
           });
