@@ -361,13 +361,52 @@
             else {
               
 
+              // zoom the map based on the conflict selected
               if(getSelected() == "2006 Lebanon War") {
-                console.log("here i am");
                 gMap.transition()
                     .duration(1000)
-                    .attr("transform", "translate(-5070, -1800)scale(10)");
+                    .attr("transform", "translate(-9850, -3600)scale(19)");
 
               }
+              if (getSelected() == "Indo-Pakistani War of 1965" || getSelected() == "Indo-Pakistani War of 1971" ||
+                  getSelected() == "Kargil War" || getSelected() == "Siachen Conflict") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-3870, -1300)scale(7)");
+              }
+
+              if (getSelected() == "Iran-Iraq War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-4700, -1600)scale(9)");
+              }
+
+              if (getSelected() == "Iraq War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-350, -50)scale(1.3)");
+              }
+
+              if (getSelected() == "Libyan-Egyptian War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-4350, -1700)scale(9)");
+              }
+
+              if(getSelected() == "Six-Day War" || getSelected() == "Yom Kippur War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-5030, -1850)scale(10)");
+
+              }
+
+              if(getSelected() == "Turkish Invasion of Cyprus") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-4980, -1700)scale(10)");
+
+              }
+
               return row["Conflict"] == getSelected();
             }
           });
