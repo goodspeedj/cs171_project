@@ -4,18 +4,20 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title>CS171 Project III: Jim Goodspeed &amp; Devin Shackle</title>
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="css/introjs.css"/>
 
     <!-- D3 Libraries -->
     <script type="text/javascript" src="js/d3.v3.min.js"></script>
     <script type="text/javascript" src="js/d3.csv.js"></script>
     <script type="text/javascript" src="js/queue.v1.min.js"></script>
     <script type="text/javascript" src="js/topojson.js"></script>
+    <script type="text/javascript" src="js/intro.js"></script>
   </head>
 
   <body onload="selectConflict();">
     <div id="head">
       <h2>The Economics of War</h2>
-      <div id="dropdown">
+      <div id="dropdown" data-step="1" data-intro="Start by selecting a conflict.">
         <form>
           <select id="list" onchange="selectConflict()">
             <option>Please choose a conflict (or all)</option>
@@ -36,22 +38,23 @@
       </div>
     </div>
 
-    <div id="text">
+    <div id="text" data-step="3" data-intro="Read a description of the conflict.">
       <div id="intro">
         <p>This visualization will allow you to explore certain economic factors of countries involved in recent conflicts. 
            Comparing the economic well-being of countries before, during, and after significant armed conflicts will show 
            how their involvement effected their economies. Please select a conflict from the drop-down menu to begin and 
-           enjoy exploring <strong>The Economics of War</strong>.  <a href="video.html">Video Introduction</a>
+           enjoy exploring <strong>The Economics of War</strong>.  <a href="video.html">Video Introduction</a>  
         </p> 
+        <p><a class="btn btn-large btn-success" href="javascript:void(0);" onclick="javascript:introJs().start();">Step by step instructions</a></p>
       </div>
       <div id="conflict_desc"></div>
     </div>
 
-    <div id="map"></div>
+    <div id="map" data-step="2" data-intro="View the countries on the map."></div>
 
-    <div id="parcoord"></div>
+    <div id="parcoord" data-step="4" data-intro="View the economic data on the parallel coordinate graph."></div>
 
-    <div id="table">
+    <div id="table" data-step="5" data-intro="View the detail data for the conflict.">
       <table id="detail-table">
         <thead>
           <tr>
@@ -94,6 +97,8 @@
         http://techslides.com/d3-world-maps-tooltips-zooming-and-queue/
         http://bl.ocks.org/mbostock/2206590
 
+        The step by step intro navigation was provided by intro.js written by Afshin Mehrabani
+
 
         Citations:
 
@@ -108,6 +113,9 @@
 
         Michael Bostock, "click-to-zoom via transformation," Gallery - mbostock / d3, accessed April 23, 2013,
         http://bl.ocks.org/mbostock/2206590
+
+        Afshin Mehrabani, "Intro.js: Better introductions for websites and features with a step-by-step guide 
+        for your projects," usabli.ca, accessed April 28, 2013, http://usablica.github.io/intro.js/
 
        */
 
@@ -157,6 +165,19 @@
         .attr("width", widthMap)
         .attr("height", heightMap)
         .on("click", reset);
+
+      var crosshatch = svgMap.append("pattern")
+        .attr("id", "crosshatch")
+        .attr("userSpaceOnUse");
+        //.attr("width", 4)
+        //.attr("height", 4);
+
+      //crosshatch.append("path")
+        //.attr("d", "M-1,1 l2,-2
+          //          M0,4 l4,-4
+            //        M3,5 l2,-2");
+
+
 
       var gMap = svgMap.append("g")
           .attr("transform", "translate(-190,0)");
@@ -270,6 +291,8 @@
 
         var desc = d3.select("#conflict_desc")
           .data(data)
+          //.attr("data-step", "3")
+          //.attr("data-intro", "Read a description of the conflict.")
           .append("p")
             .text(function(data) { return data.Description; });
 

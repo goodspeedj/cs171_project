@@ -54,6 +54,11 @@ path {
   padding: 15px;
 }
 
+#dropdown {
+  width: 300px;
+  margin: auto;
+}
+
 #mapbg {
   fill: none;
   pointer-events: all;
