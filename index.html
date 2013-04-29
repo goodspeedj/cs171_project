@@ -172,16 +172,16 @@
         .attr("height", heightMap)
         .on("click", reset);
 
-      var crosshatch = svgMap.append("pattern")
-        .attr("id", "crosshatch")
-        .attr("userSpaceOnUse");
-        //.attr("width", 4)
-        //.attr("height", 4);
+      var svgDef = svgMap.append("defs");
 
-      //crosshatch.append("path")
-        //.attr("d", "M-1,1 l2,-2
-          //          M0,4 l4,-4
-            //        M3,5 l2,-2");
+      var crosshatch = svgDef.append("pattern")
+        .attr("id", "crosshatch")
+        .attr("patternUnits","userSpaceOnUse")
+        .attr("width", "4")
+        .attr("height", "4");
+
+      crosshatch.append("path")
+        .attr("d", "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2");
 
 
 
@@ -297,8 +297,6 @@
 
         var desc = d3.select("#conflict_desc")
           .data(data)
-          //.attr("data-step", "3")
-          //.attr("data-intro", "Read a description of the conflict.")
           .append("p")
             .text(function(data) { return data.Description; });
 
@@ -319,14 +317,10 @@
             .selectAll("tr")
             .data(data);
 
-        //var nation = gMap.selectAll(".country").data(countries);
-        //console.log("nation: " + nation);
-
         rows.enter()
             .append("tr")
             .on("mouseover", highlight)
             .on("mouseout", function(d,i) { return unhighlight(i); });
-            //.on("click", click);
 
         // create a cell in each row for each column
         var cells = rows.selectAll("td")
