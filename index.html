@@ -22,15 +22,21 @@
           <select id="list" onchange="selectConflict()">
             <option>Please choose a conflict (or all)</option>
             <option>2006 Lebanon War</option>
+            <option>Eritrean-Ethiopian War</option>
+            <option>Falklands War</option>
             <option>Indo-Pakistani War of 1965</option>
             <option>Indo-Pakistani War of 1971</option>
             <option>Iran-Iraq War</option>
             <option>Iraq War</option>
             <option>Kargil War</option>
+            <option>Kosovo War</option>
             <option>Libyan-Egyptian War</option>
+            <option>Persian Gulf War</option>
             <option>Siachen Conflict</option>
             <option>Six-Day War</option>
+            <option>Thai-Laotian Border War</option>
             <option>Turkish Invasion of Cyprus</option>
+            <option>US Invasion of Panama</option>
             <option>Yom Kippur War</option>
           </select>
           <p id="description"></p>
@@ -407,6 +413,40 @@
                   .style("stroke-width", ".1px");
 
               }
+
+              else if (getSelected() == "Eritrean-Ethiopian War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-5100, -2150)scale(10)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.select(".Ethiopia").attr("class", "Ethiopia country active");
+                d3.select(".Eritrea").attr("class", "Eritrea country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".15px");
+              }
+
+              else if (getSelected() == "Falklands War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-370, -200)scale(1.5)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.select(".Argentina").attr("class", "Argentina country active");
+                d3.select(".Kingdom").attr("class", "United Kingdom country active");
+                d3.select(".Falkland").attr("class", "Falkland Islands country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".2px");
+              }
+
               else if (getSelected() == "Indo-Pakistani War of 1965" || getSelected() == "Indo-Pakistani War of 1971" ||
                   getSelected() == "Kargil War" || getSelected() == "Siachen Conflict") {
                 gMap.transition()
@@ -461,6 +501,23 @@
 
               }
 
+              else if (getSelected() == "Kosovo War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-760, -295)scale(2.6)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.select(".States").attr("class", "United States country active");
+                d3.select(".Albania").attr("class", "Albania country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".2px");
+
+              }
+
               else if (getSelected() == "Libyan-Egyptian War") {
                 gMap.transition()
                     .duration(1000)
@@ -475,6 +532,27 @@
                   .transition()
                     .duration(1000)
                   .style("stroke-width", ".2px");
+              }
+
+              else if (getSelected() == "Persian Gulf War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-645, -250)scale(2.2)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+
+                d3.selectAll(".States").attr("class", "United States country active");
+                d3.selectAll(".Iraq").attr("class", "Iraq country active");
+                d3.selectAll(".Kuwait").attr("class", "Kuwait country active");
+                d3.selectAll(".Kingdom").attr("class", "United Kingdom country active");
+                d3.selectAll(".Saudi").attr("class", "Saudi Arabia country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".5px");
+
               }
 
               else if(getSelected() == "Six-Day War" || getSelected() == "Yom Kippur War") {
@@ -495,6 +573,23 @@
 
               }
 
+              else if (getSelected() == "Thai-Laotian Border War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-5410, -1850)scale(9)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.select(".Thailand").attr("class", "Thailand country active");
+                d3.select(".Vietnam").attr("class", "Vietnam country active");
+                d3.select(".Laos").attr("class", "Laos country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".2px");
+              }
+
               else if(getSelected() == "Turkish Invasion of Cyprus") {
                 gMap.transition()
                     .duration(1000)
@@ -509,6 +604,23 @@
                   .transition()
                     .duration(1000)
                   .style("stroke-width", ".15px");
+
+              }
+
+              else if (getSelected() == "US Invasion of Panama") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-1300, -730)scale(4.5)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.select(".States").attr("class", "United States country active");
+                d3.select(".Panama").attr("class", "Panama country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".2px");
 
               }
 
