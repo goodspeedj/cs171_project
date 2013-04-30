@@ -363,6 +363,17 @@
       }
 
 
+      // clears the country fill on the map
+      function clearFill() {
+        gMap.selectAll(".c-no-data").classed("c-no-data", false);
+        gMap.selectAll(".c1-fill").classed("c1-fill", false);
+        gMap.selectAll(".c4-fill").classed("c4-fill", false);
+        gMap.selectAll(".c7-fill").classed("c7-fill", false);
+        gMap.selectAll(".c10-fill").classed("c10-fill", false);
+        gMap.selectAll(".c13-fill").classed("c13-fill", false);
+      }
+
+
       function selectConflict() {
 
         // Redraw
@@ -394,6 +405,7 @@
           var conflicts = fullData.filter(function(row) {
             if (getSelected() == "Please choose a conflict (or all)") {
               reset();
+              clearFill();
               return fullData;
             }
             else {
@@ -405,12 +417,10 @@
                     .duration(1000)
                     .attr("transform", "translate(-9850, -3600)scale(19)");
 
-                
+                clearFill();
 
-                gMap.selectAll(".active").classed("active", false);
-
-                d3.select(".Israel").attr("class", "Israel country active");
-                d3.select(".Lebanon").attr("class", "Lebanon country active");
+                d3.select(".Israel").attr("class", "Israel country c1-fill");
+                d3.select(".Lebanon").attr("class", "Lebanon country c-no-data");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -424,13 +434,13 @@
                     .duration(1000)
                     .attr("transform", "translate(-1300, -500)scale(3.2)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.selectAll(".Comoros").attr("class", "Comoros country active");
-                d3.selectAll(".Sudan").attr("class", "Sudan country active");
-                d3.selectAll(".Tanzania").attr("class", "Tanzania country active");
-                d3.selectAll(".Libya").attr("class", "Libya country active");
-                d3.selectAll(".France").attr("class", "France country active");
+                d3.selectAll(".Comoros").attr("class", "Comoros country c1-fill");
+                d3.selectAll(".Sudan").attr("class", "Sudan country c4-fill");
+                d3.selectAll(".Tanzania").attr("class", "Tanzania country c7-fill");
+                d3.selectAll(".Libya").attr("class", "Libya country c10-fill");
+                d3.selectAll(".France").attr("class", "France country c13-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -443,10 +453,10 @@
                     .duration(1000)
                     .attr("transform", "translate(-1450, -270)scale(3.2)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.selectAll(".Russian").attr("class", "Russian Federation country active");
-                d3.select(".Georgia").attr("class", "Georgia country active");
+                d3.selectAll(".Russian").attr("class", "Russian Federation country c1-fill");
+                d3.select(".Georgia").attr("class", "Georgia country c4-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -459,9 +469,9 @@
                     .duration(1000)
                     .attr("transform", "translate(-5080, -2420)scale(11)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.select(".Nigeria").attr("class", "Nigeria country active");
+                d3.select(".Nigeria").attr("class", "Nigeria country c1-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -474,9 +484,9 @@
                     .duration(1000)
                     .attr("transform", "translate(-5600, -1650)scale(10)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.selectAll(".Kyrgyzstan").attr("class", "Kyrgyzstan country active");
+                d3.selectAll(".Kyrgyzstan").attr("class", "Kyrgyzstan country c1-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -489,10 +499,10 @@
                     .duration(1000)
                     .attr("transform", "translate(-4770, -2120)scale(10)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.selectAll(".African").attr("class", "Central African Republic country active");
-                d3.selectAll(".Chad").attr("class", "Chad country active");
+                d3.selectAll(".African").attr("class", "Central African Republic country c1-fill");
+                d3.selectAll(".Chad").attr("class", "Chad country c4-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -505,9 +515,9 @@
                     .duration(1000)
                     .attr("transform", "translate(-5770, -2540)scale(12)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.select(".Chad").attr("class", "Chad country active");
+                d3.select(".Chad").attr("class", "Chad country c1-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -520,10 +530,10 @@
                     .duration(1000)
                     .attr("transform", "translate(-6180, -2550)scale(12)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.select(".Djibouti").attr("class", "Djibouti country active");
-                d3.select(".Eritrea").attr("class", "Eritrea country active");
+                d3.select(".Djibouti").attr("class", "Djibouti country c1-fill");
+                d3.select(".Eritrea").attr("class", "Eritrea country c4-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -536,10 +546,10 @@
                     .duration(1000)
                     .attr("transform", "translate(-5100, -2150)scale(10)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.select(".Ethiopia").attr("class", "Ethiopia country active");
-                d3.select(".Eritrea").attr("class", "Eritrea country active");
+                d3.select(".Ethiopia").attr("class", "Ethiopia country c1-fill");
+                d3.select(".Eritrea").attr("class", "Eritrea country c4-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -552,11 +562,11 @@
                     .duration(1000)
                     .attr("transform", "translate(-370, -200)scale(1.5)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.selectAll(".Argentina").attr("class", "Argentina country active");
-                d3.selectAll(".Kingdom").attr("class", "United Kingdom country active");
-                d3.selectAll(".Falkland").attr("class", "Falkland Islands country active");
+                d3.selectAll(".Argentina").attr("class", "Argentina country c4-fill");
+                d3.selectAll(".Kingdom").attr("class", "United Kingdom country c1-fill");
+                d3.selectAll(".Falkland").attr("class", "Falkland Islands country c1-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -570,10 +580,10 @@
                     .duration(1000)
                     .attr("transform", "translate(-3870, -1300)scale(7)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.selectAll(".India").attr("class", "India country active");
-                d3.selectAll(".Pakistan").attr("class", "Pakistan country active");
+                d3.selectAll(".India").attr("class", "India country c1-fill");
+                d3.selectAll(".Pakistan").attr("class", "Pakistan country c4-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -587,10 +597,10 @@
                     .duration(1000)
                     .attr("transform", "translate(-4700, -1600)scale(9)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.select(".Iraq").attr("class", "Iraq country active");
-                d3.select(".Iran").attr("class", "Iran country active");
+                d3.select(".Iraq").attr("class", "Iraq country c-no-data");
+                d3.select(".Iran").attr("class", "Iran country c1-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -603,13 +613,12 @@
                     .duration(1000)
                     .attr("transform", "translate(-350, -50)scale(1.3)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-
-                d3.selectAll(".States").attr("class", "United States country active");
-                d3.selectAll(".Iraq").attr("class", "Iraq country active");
-                d3.selectAll(".Australia").attr("class", "Australia country active");
-                d3.selectAll(".Kingdom").attr("class", "United Kingdom country active");
+                d3.selectAll(".States").attr("class", "United States country c1-fill");
+                d3.selectAll(".Kingdom").attr("class", "United Kingdom country c4-fill");
+                d3.selectAll(".Australia").attr("class", "Australia country c7-fill");
+                d3.selectAll(".Iraq").attr("class", "Iraq country c10-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -623,10 +632,10 @@
                     .duration(1000)
                     .attr("transform", "translate(-760, -295)scale(2.6)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.selectAll(".States").attr("class", "United States country active");
-                d3.select(".Albania").attr("class", "Albania country active");
+                d3.selectAll(".States").attr("class", "United States country c1-fill");
+                d3.select(".Albania").attr("class", "Albania country c4-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -640,10 +649,10 @@
                     .duration(1000)
                     .attr("transform", "translate(-4350, -1700)scale(9)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.select(".Libya").attr("class", "Libya country active");
-                d3.select(".Egypt").attr("class", "Egypt country active");
+                d3.select(".Libya").attr("class", "Libya country c-no-data");
+                d3.select(".Egypt").attr("class", "Egypt country c1-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -656,9 +665,9 @@
                     .duration(1000)
                     .attr("transform", "translate(-6180, -2850)scale(12)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.select(".Kenya").attr("class", "Kenya country active");
+                d3.select(".Kenya").attr("class", "Kenya country c1-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -671,14 +680,14 @@
                     .duration(1000)
                     .attr("transform", "translate(-645, -250)scale(2.2)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
 
-                d3.selectAll(".States").attr("class", "United States country active");
-                d3.selectAll(".Iraq").attr("class", "Iraq country active");
-                d3.selectAll(".Kuwait").attr("class", "Kuwait country active");
-                d3.selectAll(".Kingdom").attr("class", "United Kingdom country active");
-                d3.selectAll(".Saudi").attr("class", "Saudi Arabia country active");
+                d3.selectAll(".States").attr("class", "United States country c1-fill");
+                d3.selectAll(".Kuwait").attr("class", "Kuwait country c4-fill");
+                d3.selectAll(".Kingdom").attr("class", "United Kingdom country c7-fill");
+                d3.selectAll(".Saudi").attr("class", "Saudi Arabia country c10-fill");
+                d3.selectAll(".Iraq").attr("class", "Iraq country c-no-data");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -692,9 +701,9 @@
                     .duration(1000)
                     .attr("transform", "translate(-9150, -4370)scale(18)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.select(".Rwanda").attr("class", "Rwanda country active");
+                d3.select(".Rwanda").attr("class", "Rwanda country c1-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -707,11 +716,11 @@
                     .duration(1000)
                     .attr("transform", "translate(-1700, -670)scale(4.2)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.selectAll(".Cote").attr("class", "Cote d'Ivoire country active");
-                d3.selectAll(".France").attr("class", "France country active");
-
+                d3.selectAll(".France").attr("class", "France country c1-fill");
+                d3.selectAll(".Cote").attr("class", "Cote d'Ivoire country c4-fill");
+                
                 gMap.selectAll(".country")
                   .transition()
                     .duration(1000)
@@ -723,11 +732,11 @@
                     .duration(1000)
                     .attr("transform", "translate(-5030, -1850)scale(10)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.select(".Israel").attr("class", "Israel country active");
-                d3.select(".Egypt").attr("class", "Egypt country active");
-                d3.select(".Syria").attr("class", "Syria country active");
+                d3.select(".Israel").attr("class", "Israel country c1-fill");
+                d3.select(".Egypt").attr("class", "Egypt country c4-fill");
+                d3.select(".Syria").attr("class", "Syria country c7-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -741,11 +750,11 @@
                     .duration(1000)
                     .attr("transform", "translate(-5410, -1850)scale(9)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.select(".Thailand").attr("class", "Thailand country active");
-                d3.select(".Vietnam").attr("class", "Vietnam country active");
-                d3.select(".Laos").attr("class", "Laos country active");
+                d3.select(".Thailand").attr("class", "Thailand country c1-fill");
+                d3.select(".Vietnam").attr("class", "Vietnam country c4-fill");
+                d3.select(".Laos").attr("class", "Laos country c-no-data");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -758,11 +767,11 @@
                     .duration(1000)
                     .attr("transform", "translate(-4980, -1700)scale(10)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.selectAll(".Greece").attr("class", "Greece country active");
-                d3.selectAll(".Turkey").attr("class", "Turkey country active");
-
+                d3.selectAll(".Turkey").attr("class", "Turkey country c1-fill");
+                d3.selectAll(".Greece").attr("class", "Greece country c4-fill");
+                
                 gMap.selectAll(".country")
                   .transition()
                     .duration(1000)
@@ -775,10 +784,10 @@
                     .duration(1000)
                     .attr("transform", "translate(-1300, -730)scale(4.5)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.selectAll(".States").attr("class", "United States country active");
-                d3.selectAll(".Panama").attr("class", "Panama country active");
+                d3.selectAll(".States").attr("class", "United States country c1-fill");
+                d3.selectAll(".Panama").attr("class", "Panama country c4-fill");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -792,9 +801,9 @@
                     .duration(1000)
                     .attr("transform", "translate(-4950, -2070)scale(10)");
 
-                gMap.selectAll(".active").classed("active", false);
+                clearFill();
 
-                d3.select(".Sudan").attr("class", "Sudan country active");
+                d3.select(".Sudan").attr("class", "Sudan country c1-fill");
 
                 gMap.selectAll(".country")
                   .transition()
