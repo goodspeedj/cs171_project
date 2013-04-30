@@ -22,6 +22,13 @@
           <select id="list" onchange="selectConflict()">
             <option>Please choose a conflict (or all)</option>
             <option>2006 Lebanon War</option>
+            <option>2008 Invasion of Anjouan</option>
+            <option>2008 South Ossetia War</option>
+            <option>2009 Boko Haram Uprising</option>
+            <option>2010 Ethnic Violence in Kyrgyzstan</option>
+            <option>Central African Republic Bush War</option>
+            <option>Civil War in Chad</option>
+            <option>Djiboutian-Eritrean Border Conflict</option>
             <option>Eritrean-Ethiopian War</option>
             <option>Falklands War</option>
             <option>Indo-Pakistani War of 1965</option>
@@ -31,12 +38,16 @@
             <option>Kargil War</option>
             <option>Kosovo War</option>
             <option>Libyan-Egyptian War</option>
+            <option>Mount Elgon Insurgency</option>
             <option>Persian Gulf War</option>
+            <option>Rwandan Civil War</option>
+            <option>Second Ivorian Civil War</option>
             <option>Siachen Conflict</option>
             <option>Six-Day War</option>
             <option>Thai-Laotian Border War</option>
             <option>Turkish Invasion of Cyprus</option>
             <option>US Invasion of Panama</option>
+            <option>War in Darfur</option>
             <option>Yom Kippur War</option>
           </select>
           <p id="description"></p>
@@ -408,6 +419,118 @@
 
               }
 
+              else if (getSelected() == "2008 Invasion of Anjouan") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-1300, -500)scale(3.2)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.selectAll(".Comoros").attr("class", "Comoros country active");
+                d3.selectAll(".Sudan").attr("class", "Sudan country active");
+                d3.selectAll(".Tanzania").attr("class", "Tanzania country active");
+                d3.selectAll(".Libya").attr("class", "Libya country active");
+                d3.selectAll(".France").attr("class", "France country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".15px");
+              }
+
+              else if (getSelected() == "2008 South Ossetia War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-1450, -270)scale(3.2)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.selectAll(".Russian").attr("class", "Russian Federation country active");
+                d3.select(".Georgia").attr("class", "Georgia country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".15px");
+              }
+
+              else if (getSelected() == "2009 Boko Haram Uprising") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-5080, -2420)scale(11)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.select(".Nigeria").attr("class", "Nigeria country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".15px");
+              }
+
+              else if (getSelected() == "2010 Ethnic Violence in Kyrgyzstan") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-5600, -1650)scale(10)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.selectAll(".Kyrgyzstan").attr("class", "Kyrgyzstan country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".15px");
+              }
+
+              else if (getSelected() == "Central African Republic Bush War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-4770, -2120)scale(10)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.selectAll(".African").attr("class", "Central African Republic country active");
+                d3.selectAll(".Chad").attr("class", "Chad country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".15px");
+              }
+
+              else if (getSelected() == "Civil War in Chad") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-5770, -2540)scale(12)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.select(".Chad").attr("class", "Chad country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".15px");
+              }
+
+              else if (getSelected() == "Djiboutian-Eritrean Border Conflict") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-6180, -2550)scale(12)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.select(".Djibouti").attr("class", "Djibouti country active");
+                d3.select(".Eritrea").attr("class", "Eritrea country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".15px");
+              }
+
               else if (getSelected() == "Eritrean-Ethiopian War") {
                 gMap.transition()
                     .duration(1000)
@@ -431,9 +554,9 @@
 
                 gMap.selectAll(".active").classed("active", false);
 
-                d3.select(".Argentina").attr("class", "Argentina country active");
-                d3.select(".Kingdom").attr("class", "United Kingdom country active");
-                d3.select(".Falkland").attr("class", "Falkland Islands country active");
+                d3.selectAll(".Argentina").attr("class", "Argentina country active");
+                d3.selectAll(".Kingdom").attr("class", "United Kingdom country active");
+                d3.selectAll(".Falkland").attr("class", "Falkland Islands country active");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -449,8 +572,8 @@
 
                 gMap.selectAll(".active").classed("active", false);
 
-                d3.select(".India").attr("class", "India country active");
-                d3.select(".Pakistan").attr("class", "Pakistan country active");
+                d3.selectAll(".India").attr("class", "India country active");
+                d3.selectAll(".Pakistan").attr("class", "Pakistan country active");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -502,7 +625,7 @@
 
                 gMap.selectAll(".active").classed("active", false);
 
-                d3.select(".States").attr("class", "United States country active");
+                d3.selectAll(".States").attr("class", "United States country active");
                 d3.select(".Albania").attr("class", "Albania country active");
 
                 gMap.selectAll(".country")
@@ -528,6 +651,21 @@
                   .style("stroke-width", ".2px");
               }
 
+              else if (getSelected() == "Mount Elgon Insurgency") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-6180, -2850)scale(12)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.select(".Kenya").attr("class", "Kenya country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".15px");
+              }
+
               else if (getSelected() == "Persian Gulf War") {
                 gMap.transition()
                     .duration(1000)
@@ -547,6 +685,37 @@
                     .duration(1000)
                   .style("stroke-width", ".5px");
 
+              }
+
+              else if (getSelected() == "Rwandan Civil War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-9150, -4370)scale(18)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.select(".Rwanda").attr("class", "Rwanda country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".1px");
+              }
+
+              else if (getSelected() == "Second Ivorian Civil War") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-1700, -670)scale(4.2)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.selectAll(".Cote").attr("class", "Cote d'Ivoire country active");
+                d3.selectAll(".France").attr("class", "France country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".2px");
               }
 
               else if(getSelected() == "Six-Day War" || getSelected() == "Yom Kippur War") {
@@ -591,8 +760,8 @@
 
                 gMap.selectAll(".active").classed("active", false);
 
-                d3.select(".Greece").attr("class", "Greece country active");
-                d3.select(".Turkey").attr("class", "Turkey country active");
+                d3.selectAll(".Greece").attr("class", "Greece country active");
+                d3.selectAll(".Turkey").attr("class", "Turkey country active");
 
                 gMap.selectAll(".country")
                   .transition()
@@ -608,14 +777,29 @@
 
                 gMap.selectAll(".active").classed("active", false);
 
-                d3.select(".States").attr("class", "United States country active");
-                d3.select(".Panama").attr("class", "Panama country active");
+                d3.selectAll(".States").attr("class", "United States country active");
+                d3.selectAll(".Panama").attr("class", "Panama country active");
 
                 gMap.selectAll(".country")
                   .transition()
                     .duration(1000)
                   .style("stroke-width", ".2px");
 
+              }
+
+              else if (getSelected() == "War in Darfur") {
+                gMap.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(-4950, -2070)scale(10)");
+
+                gMap.selectAll(".active").classed("active", false);
+
+                d3.select(".Sudan").attr("class", "Sudan country active");
+
+                gMap.selectAll(".country")
+                  .transition()
+                    .duration(1000)
+                  .style("stroke-width", ".2px");
               }
 
               else {
