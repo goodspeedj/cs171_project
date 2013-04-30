@@ -72,7 +72,7 @@ id	name
 233	Estonia
 234	Faroe Islands
 238	Falkland Islands
-239	South Georgia and the South Sandwich Islands
+239	South Georgia1 and the South Sandwich Islands
 242	Fiji
 246	Finland
 248	Åland Islands
@@ -111,7 +111,7 @@ id	name
 372	Ireland
 376	Israel
 380	Italy
-384	Côte d'Ivoire
+384	Cote d'Ivoire
 388	Jamaica
 392	Japan
 398	Kazakhstan
@@ -211,7 +211,7 @@ id	name
 710	South Africa
 716	Zimbabwe
 724	Spain
-728	South Sudan
+728	South Sudan1
 729	Sudan
 732	Western Sahara
 740	Suriname
@@ -240,7 +240,7 @@ id	name
 831	Guernsey
 832	Jersey
 833	Isle of Man
-834	Tanzania, United Republic of
+834	Tanzania
 840	United States
 850	Virgin Islands, U.S.
 854	Burkina Faso
