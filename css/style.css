@@ -34,11 +34,6 @@ hr {
   background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc); 
 }
 
-rect {
-  fill: none;
-  pointer-events: all;
-}
-
 path {
   stroke: white;
   stroke-width: 0.25px;

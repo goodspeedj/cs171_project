@@ -181,6 +181,7 @@
       svgMap.append("rect")
         .attr("width", widthMap)
         .attr("height", heightMap)
+        .attr("id", "mapbg")
         .on("click", reset);
 
       var svgDef = svgMap.append("defs");
