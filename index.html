@@ -142,7 +142,7 @@
       // economic indicators (y axis)
       var indicators = ["GDP % growth","GDPpCap","MilEx(% of GDP)","Inflation","Unempl","Unempl(Male)"];
 
-      var margin = [60, 120, 60, 120];
+      var margin = [60, 150, 60, 120];
       var widthPC  = 1200 - margin[1] - margin[3];
       var heightPC = 500 - margin[0] - margin[2];
 
@@ -280,7 +280,7 @@
 
               tooltip
                 .classed("hidden", false)
-                .attr("style", "left:" + (mouse[0]+550) + "px;top:" + (mouse[1]+50) + "px")
+                .attr("style", "left:" + (mouse[0]+670) + "px;top:" + (mouse[1]+60) + "px")
                 .html(d.name)
             })
             .on("mouseout",  function(d,i) {
@@ -461,7 +461,7 @@
                 gMap.selectAll(".country")
                   .transition()
                     .duration(1000)
-                  .style("stroke-width", ".15px");
+                  .style("stroke-width", ".2px");
               }
 
               else if (getSelected() == "2009 Boko Haram Uprising") {
@@ -824,7 +824,8 @@
           var countries = [];
           fullData.filter(function(row, i) {
             if (row["Conflict"] == getSelected()) {
-              countries.push(row.Code + "-" + row.Stage); 
+              //countries.push(row.Code + "-" + row.Stage); 
+              countries.push(row.Country);
             }
             
           });
@@ -850,7 +851,6 @@
           }
           
 
-          //console.log(conflicts);
 
           // Create a scale and brush for each economic indicator
           indicators.forEach(function(d) {
@@ -877,21 +877,47 @@
               .data(countries)
             .enter().append("svg:g")
               .attr("class", "legend")
-              .attr("transform", function(d, i) { return "translate(1000," + (i * 30 + 50) + ")"; });
+              .attr("transform", function(d, i) { return "translate(965," + (i * 18 + 30) + ")"; });
 
 
           // color lines in legend for each country
           legend.append("svg:line")
-              .attr("class", function(d,i) { return d.Code + "-" + d.Stage + "-" + d.Conf_Code + " " + "c" + i })
-              .attr("x2", 30);
+              .attr("class", function(d,i) { return "c" + i })
+              .attr("x2", 20);
 
 
           // country names in the legend
           legend.append("svg:text")
-              .attr("x", 50)
-              .attr("dy", ".31em")
-              .text(function(d) { return d; });
-              //.on("click", detailTableFromLegend);
+              .attr("x", 30)
+              .attr("dy", ".21em")
+              .text(function(d,i) { 
+                switch(i) {
+                  case 0:
+                  case 3:
+                  case 6:
+                  case 9:
+                  case 12:
+                    return d + ": Pre Conflict";
+                    break;
+
+                  case 1:
+                  case 4:
+                  case 7:
+                  case 10:
+                  case 13:
+                    return d + ": During Conflict";
+                    break;
+
+                  case 2:
+                  case 5:
+                  case 8:
+                  case 11:
+                  case 14:
+                    return d + ": Post Conflict";
+                    break;
+                }
+              });
+
 
 
           // Add foreground lines (the main lines in the visualization)
