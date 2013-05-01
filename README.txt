@@ -17,14 +17,26 @@ python -m SimpleHTTPServer 8888 &
 
 # ==============================================================================================
 #
-# The map implementation requires TopoJSON which in turn requires Node.js.  
-#
-# Node.js can be downloaded and installed from: http://nodejs.org/download/
-#
-# To install TopoJSON open the Node.js command prompt and type: npm install -g topojson
+# Required files and libraries.
 #
 # ==============================================================================================
+All libraries are included in the projct files, but are listed here for reference:
 
+d3.v3.min.js: http://d3js.org/d3.v3.min.zip
+d3.csv.js: https://github.com/mbostock/d3/wiki/CSV
+queue.v1.min.js: https://github.com/mbostock/queue
+topojson.js: https://github.com/mbostock/topojson
+intro.js: http://usablica.github.io/intro.js/
+
+
+# ==============================================================================================
+#
+# References and citations
+#
+# ==============================================================================================
+All references and citations are included at the end of our process book and also on our project 
+site in the citations.html file.  Additionally code citations are included in a comment section 
+in the index.html file.
 
 
 # ==============================================================================================
@@ -43,13 +55,33 @@ python -m SimpleHTTPServer 8888 &
 # Michael Bostock, "click-to-zoom via transformation," Gallery - mbostock / d3, accessed April 23, 2013,
 #   http://bl.ocks.org/mbostock/2206590
 #
+# The annotation code/introduction code is provided by intro.js written by Afshin Mehrabani
+#
+# Afshin Mehrabani, "Intro.js: Better introductions for websites and features with a step-by-step guide 
+#   for your projects," usabli.ca, accessed April 28, 2013, http://usablica.github.io/intro.js/
+#
 # ==============================================================================================
+
+function click(d)
+	Allows the user to click on a country in the map.  On click will zoom the map and highlight
+	the country in red.  Bostock, "click-to-zoom via transformation."
+
+
+function reset()
+	This function will return the map to it's original state (zoomed out, no highlighting).
+	"D3 World Maps: Tooltips, Zooming, and Queue."
+
+
+function ready() 
+	This function prepares the map and does the actual drawing as well as adding the tooltip 
+	functionality.  "D3 World Maps: Tooltips, Zooming, and Queue."
+
 
 function getSelected()
 	This function gets the selected item from the filter pull down 
 
 
-function getDesc()
+function addDesc()
 	This function will add the conflict description to the head of the parallel coordinate 
 	graph.
 
@@ -70,12 +102,21 @@ function unhighlight()
 	color, width and opacity.
 
 
+function clearFill()
+	This function will clear the fill on the countries by removing any CSS classes from the 
+	country objects.
+
+
 function selectConflict()
 	This is the main function and is responsible for the rendering of the parallel coordinate
 	graph.  The basic workflow is:
 
 		1.  If there is already a parallel coordinate graph destroy it and recreate it based on
 		    the filter pulldown.
+
+		2.  Determine which countries are involved in the conflict based on the selection from 
+		    the pull down.  Zoom the map to those countries and fill the countries with matching
+		    colors to the parallel coordinate lines.
 
 		2.  Open the data csv file and filter it based on the conflict from the getSelected 
 		    function
@@ -99,17 +140,19 @@ function selectConflict()
 
 function dragstart()
 	Function to register the index of the axis being moved.  This function was not modified from 
-	the original in the Michael Bostock example.
+	the original in the Michael Bostock example. Bostock, "Edgar Anderson's Iris data set parallel 
+	coordinates."
 
 
 function drag()
 	Function to drag the axis to a different order.  This function was not modified from 
-	the original in the Michael Bostock example.
+	the original in the Michael Bostock example.  Bostock, "Edgar Anderson's Iris data set parallel 
+	coordinates."
 
 
 function dragend()
 	Function to finish and re-order the axis.  This function was not modified from the original 
-	in the Michael Bostock example.
+	in the Michael Bostock example.  Bostock, "Edgar Anderson's Iris data set parallel coordinates."
 
 
 function redrawAxis()
@@ -126,20 +169,10 @@ function brush()
 	Function to create the brush for each axis line.  The items that are not in the brush are 
 	given a light gray color.  This function also maps back the coordinates of the brushed lines
 	to data and adds this filterd data to the filterData array.  That filterData array is then
-	used to populate the data table with the records that are in the brush.
+	used to populate the data table with the records that are in the brush.  This is partially based
+	on the Michael Bostock parallel coordinate example.  Bostock, "Edgar Anderson's Iris data set parallel 
+	coordinates."
 
-
-
-
-
-# ==========================================================================================
-#
-# Libraries
-#
-# ==========================================================================================
-
-Our project makes use of the main d3.v3.min.js file and the d3.csv.js library.  Both libraries
-are hosted locally within our project in the js folder.
 
 
 
@@ -149,6 +182,20 @@ are hosted locally within our project in the js folder.
 #
 # ==========================================================================================
 
-Our project uses one data file called conflictPreCompute.csv.  It is located in the data
-directory of our project and is loaded using d3.csv.  Much of the data clean-up for this file
-was done with the proj2Transposer.py script.
+Our project uses several data files.  The main data file containing the conflict data is called 
+conflictPreCompute.csv.  It is located in the data directory of our project and is loaded using 
+d3.csv.  Much of the data clean-up for this file was done with the proj2Transposer.py script.
+
+There are two data file for the map visualization.  The world-110.json file contains the SVG 
+paths for countries in the map and can be obtained from the following location:
+
+https://github.com/mbostock/topojson/blob/master/examples/world-110m.json
+
+The second map data file is for the country names called world-country-names.tsv.  This file is 
+located in the data directory and can also be obtained from the following location:
+
+https://github.com/mapmeld/flightmap/blob/gh-pages/world-country-names.tsv
+
+
+
+
