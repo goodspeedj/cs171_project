@@ -230,7 +230,7 @@
 
       // use queue for the map data files
       queue()
-          .defer(d3.json, "data/world-50m.json")
+          .defer(d3.json, "data/world-110m.json")
           .defer(d3.tsv, "data/world-country-names.tsv")
           .await(ready);
 
