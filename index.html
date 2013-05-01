@@ -390,7 +390,7 @@
             .append("svg:g")
               .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
 
-              
+
         }
         else {
             var svg = d3.select("#parcoord").append("svg:svg")
@@ -402,6 +402,7 @@
                 .attr("id","para");
 
             // Add a legend for the main display
+            if (getSelected() == "Please choose a conflict (or all)") {
               var legendPre = svg.append("svg:g")
                 .attr("class", "legend")
                 .attr("transform", "translate(965,30)");
@@ -444,6 +445,8 @@
                   .attr("x", 30)
                   .attr("dy", ".21em")
                   .text("Post Conflict");
+             }
+
         }
           
 
