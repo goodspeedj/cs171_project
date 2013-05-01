@@ -145,6 +145,11 @@ ul.nav {
   list-style-type: none;
 }
 
+.cit {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 a.nav {
   display: inline-block;
   padding-right: 10px;
