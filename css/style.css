@@ -4,6 +4,29 @@ body {
     color: #2E2E2E;
 }
 
+#video {
+ padding-left: 45px;
+ padding-right: 160px;
+}
+
+#text > .hidden1 {
+ position: absolute;
+ height: 360px;
+ width: 588px;
+ top: 92px;
+ left: 8px;
+ z-index: -1;
+}
+
+#dropdown > .hidden2 {
+ position: absolute;
+ top: 42px;
+ left: 484px;
+ height: 22px;
+ width: 300px;
+ z-index: -1;
+}
+
 #conflict_desc {
   font-size: 13px;
 }
