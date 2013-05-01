@@ -227,6 +227,7 @@ a:hover {
 .c0 {
   stroke: #F07A7C;
   stroke-width: 2.5px;
+  stroke-dasharray: 3;
 }
 
 .c1 {
@@ -241,11 +242,13 @@ a:hover {
 .c2 {
   stroke:#A31215;
   stroke-width: 2.5px;
+  stroke-dasharray: 10;
 }
 
 .c3 {
   stroke:#72A9D5;
   stroke-width: 2.5px;
+  stroke-dasharray: 3;
 }
 
 .c4 {
@@ -260,11 +263,13 @@ a:hover {
 .c5 {
   stroke: #275982;
   stroke-width: 2.5px;
+  stroke-dasharray: 10;
 }
 
 .c6 {
   stroke: #6DC16A;
   stroke-width: 2.5px;
+  stroke-dasharray: 3;
 }
 
 .c7 {
@@ -279,11 +284,13 @@ a:hover {
 .c8 {
   stroke: #306C2D;
   stroke-width: 2.5px;
+  stroke-dasharray: 10;
 }
 
 .c9 {
   stroke: #BD88C6;
   stroke-width: 2.5px;
+  stroke-dasharray: 3;
 }
 
 .c10 {
@@ -298,11 +305,13 @@ a:hover {
 .c11 {
   stroke: #6D3875;
   stroke-width: 2.5px;
+  stroke-dasharray: 10;
 }
 
 .c12 {
   stroke: #FFAD5B;
   stroke-width: 2.5px;
+  stroke-dasharray: 3;
 }
 
 .c13 {
@@ -317,6 +326,7 @@ a:hover {
 .c14 {
  stroke: #C56200;
  stroke-width: 2.5px;
+ stroke-dasharray: 10;
 }
 
 .c-no-data {
