@@ -136,12 +136,16 @@
 
        */
 
+
+
+
       // main data file
       var data = "data/conflictPreCompute.csv";
 
       // economic indicators (y axis)
       var indicators = ["GDP % growth","GDPpCap","MilEx(% of GDP)","Inflation","Unempl","Unempl(Male)"];
 
+      // basics for the parallel coordinate graph
       var margin = [60, 150, 60, 120];
       var widthPC  = 1200 - margin[1] - margin[3];
       var heightPC = 500 - margin[0] - margin[2];
@@ -155,21 +159,17 @@
       var filterData = new Array();
 
 
-
-
-      // Map code
+      /*
+       * Map code
+       */
       var widthMap = 600;
       var heightMap = 360;
       var active;
-
-      var color = d3.scale.category10();
 
       var projection = d3.geo.mercator()
           .center([0,0])
           .scale(85)
           .rotate([0, 0]);
-          //.translate([480, 300])
-          //.scale(970);
 
       var pathMap = d3.geo.path()
           .projection(projection);
@@ -184,24 +184,12 @@
         .attr("id", "mapbg")
         .on("click", reset);
 
-      var svgDef = svgMap.append("defs");
-
-      var crosshatch = svgDef.append("pattern")
-        .attr("id", "crosshatch")
-        .attr("patternUnits","userSpaceOnUse")
-        .attr("width", "4")
-        .attr("height", "4");
-
-      crosshatch.append("path")
-        .attr("d", "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2");
-
-
 
       var gMap = svgMap.append("g")
           .attr("transform", "translate(-190,0)");
 
 
-      // function to zoom in on a country in the map
+      // function to zoom in on a country in the map by user click
       function click(d) {
 
         // if already active clicking will de-activate
@@ -240,6 +228,7 @@
       var tooltip = d3.select("#map").append("div")
         .attr("class", "tooltip");
 
+      // use queue for the map data files
       queue()
           .defer(d3.json, "data/world-50m.json")
           .defer(d3.tsv, "data/world-country-names.tsv")
@@ -291,6 +280,8 @@
       }
 
 
+
+
       // Gets the selected item from the pull down for the filter
       function getSelected() {
         var list = document.getElementById("list");
@@ -315,7 +306,7 @@
       }
 
 
-      // Displays the detail table
+      // Displays the detail table below the parallel coordinate graph
       function detailTable(data) {
 
         var columns = ["Country","Year","GDP % growth","GDPpCap","MilEx(% of GDP)","Inflation","Unempl","Unempl(Male)"];
@@ -349,7 +340,7 @@
       }
 
 
-      // Highlight the line based on mouseover on the data table 
+      // Highlight the line in the graph based on mouseover on the data table 
       function highlight(data) {
 
         d3.selectAll("." + data.Code + "-" + data.Stage + "-" + data.Conf_Code)
@@ -357,7 +348,7 @@
       }
 
 
-      // turns off the highlighting
+      // turns off the line highlighting
       function unhighlight(i) {
         d3.selectAll(".black")
           .attr("class", function(d) { return d.Code + "-" + d.Stage + "-" + d.Conf_Code + " " + "c" + i; });        
@@ -375,6 +366,7 @@
       }
 
 
+      // draws the parallel coordinate graph
       function selectConflict() {
 
         // Redraw
@@ -452,17 +444,17 @@
 
         d3.csv(data, function(fullData) {
 
-          // filter
+          // filter the conflict data
           var conflicts = fullData.filter(function(row) {
+
+            // display all data
             if (getSelected() == "Please choose a conflict (or all)") {
               reset();
               clearFill();
-
-              
-
-                  return fullData;
+              return fullData;
             }
 
+            // otherwise filter the data based on conflict
             else {
               
 
@@ -885,6 +877,7 @@
           });
 
           
+          // delete and refresh the detail table
           if (document.getElementById("conflict_desc")) {
             var parent = document.getElementById("text");
             var child = document.getElementById("conflict_desc");
