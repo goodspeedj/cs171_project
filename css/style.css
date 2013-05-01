@@ -35,7 +35,7 @@ hr {
 }
 
 path {
-  stroke: white;
+  stroke: #2EFE2E;
   stroke-width: 0.25px;
   fill: gray;
 }
@@ -320,8 +320,26 @@ a:hover {
 
 .black {
   stroke: #000000;
-  stroke-width: 6px;
+  stroke-width: 5px;
   stroke-opacity: .75;
+}
+
+.pre {
+  stroke: #377EB8;
+  stroke-width: 1.5px;
+  stroke-opacity: .50;
+}
+
+.during {
+  stroke: #E41A1C;
+  stroke-width: 2px;
+  stroke-opacity: .50;
+}
+
+.post {
+  stroke: #984EA3;
+  stroke-width: 1.5px;
+  stroke-opacity: .50;
 }
 
 .brush .extent {

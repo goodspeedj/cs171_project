@@ -389,6 +389,8 @@
               .attr("id", "container")
             .append("svg:g")
               .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
+
+              
         }
         else {
             var svg = d3.select("#parcoord").append("svg:svg")
@@ -396,7 +398,52 @@
                 .attr("height", heightPC + margin[0] + margin[2])
                 .attr("id", "container")
               .append("svg:g")
-                .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")");
+                .attr("transform", "translate(" + margin[0] + "," + margin[0] + ")")
+                .attr("id","para");
+
+            // Add a legend for the main display
+              var legendPre = svg.append("svg:g")
+                .attr("class", "legend")
+                .attr("transform", "translate(965,30)");
+
+              var legendDuring = svg.append("svg:g")
+                .attr("class", "legend")
+                .attr("transform", "translate(965,50)");
+
+              var legendPost = svg.append("svg:g")
+                .attr("class", "legend")
+                .attr("transform", "translate(965,70)");
+
+
+              // color lines in legend for each time period
+              legendPre.append("svg:line")
+                  .attr("class", "pre")
+                  .attr("x2", 20);
+
+              // color lines in legend for each time period
+              legendDuring.append("svg:line")
+                  .attr("class", "during")
+                  .attr("x2", 20);
+
+              legendPost.append("svg:line")
+                  .attr("class", "post")
+                  .attr("x2", 20);
+
+              // lables
+              legendPre.append("svg:text")
+                  .attr("x", 30)
+                  .attr("dy", ".21em")
+                  .text("Pre Conflict");
+
+              legendDuring.append("svg:text")
+                  .attr("x", 30)
+                  .attr("dy", ".21em")
+                  .text("During Conflict");
+
+              legendPost.append("svg:text")
+                  .attr("x", 30)
+                  .attr("dy", ".21em")
+                  .text("Post Conflict");
         }
           
 
@@ -407,8 +454,12 @@
             if (getSelected() == "Please choose a conflict (or all)") {
               reset();
               clearFill();
-              return fullData;
+
+              
+
+                  return fullData;
             }
+
             else {
               
 
@@ -825,7 +876,6 @@
           var countries = [];
           fullData.filter(function(row, i) {
             if (row["Conflict"] == getSelected()) {
-              //countries.push(row.Code + "-" + row.Stage); 
               countries.push(row.Country);
             }
             
@@ -929,7 +979,24 @@
             .enter().append("svg:path")
               .attr("d", path)
               .attr("d", path)
-              .attr("class", function(d,i) { return d.Code + "-" + d.Stage + "-" + d.Conf_Code + " " + "c" + i });
+              .attr("class", function(d,i) {
+                if (getSelected() == "Please choose a conflict (or all)") {
+                  switch(d.Stage) {
+                    case "Pre":
+                      return "pre " + d.Code + "-" + d.Stage + "-" + d.Conf_Code;
+                      break;
+                    case "During":
+                      return "during " + d.Code + "-" + d.Stage + "-" + d.Conf_Code;
+                      break;
+                    case "Post":
+                      return "post " + d.Code + "-" + d.Stage + "-" + d.Conf_Code;
+                      break;
+                  }
+                }
+                else {
+                  return "c" + i + " " + d.Code + "-" + d.Stage + "-" + d.Conf_Code;
+                }
+              });
 
 
 
