@@ -18,14 +18,20 @@ body {
  z-index: -1;
 }
 
-#dropdown > .hidden2 {
+
+#dropdown #hidden2 {
  position: absolute;
  top: 42px;
  left: 484px;
  height: 22px;
- width: 300px;
- z-index: -1;
+ width: 400px;
 }
+
+#hidden2 {
+  z-index: -2;
+  visibility: hidden;
+}
+
 
 #conflict_desc {
   font-size: 13px;
@@ -110,6 +116,14 @@ path {
 }
 
 #parcoord {
+    height: 500px;
+    clear: both;
+    margin-left:auto;
+    margin-right:auto;
+    width:90%;
+}
+
+#outer {
     height: 500px;
     clear: both;
     margin-left:auto;

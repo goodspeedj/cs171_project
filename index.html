@@ -18,11 +18,11 @@
     <div id="head">
       <h2>The Economics of War</h2>
       <div id="dropdown" data-step="1" data-intro="India has a long history of clashing with neighboring Pakistan and the two nuclear powers have engaged in numerous, bloody conflicts. But will it always be like this? There may be some economic signs that India may have more incentive to put aside its differences with Pakistan. 
-<br>
-<br>
-Let's begin by selecting the 'Indo-Pakistani War of 1965' from the drop-down menu.">
+      <br>
+      <br>
+      Let's begin by selecting the 'Indo-Pakistani War of 1965' from the drop-down menu.">
         <form>
-          <select id="list" onchange="selectConflict()">
+          <select id="list" data-step="6" data-intro="A dip in India's growth rate from 5.4% to -2.6% is quite significant. Let's look at another conflict and see what we find.<br><br>Please select the 'Indo-Pakistani War of 1971' from the drop-down menu."  onchange="selectConflict()">
             <option>Please choose a conflict (or all)</option>
             <option>2006 Lebanon War</option>
             <option>2008 Invasion of Anjouan</option>
@@ -55,8 +55,6 @@ Let's begin by selecting the 'Indo-Pakistani War of 1965' from the drop-down men
           </select>
           <p id="description"></p>
         </form>
-
-        <div class="hidden2" data-step="6" data-intro="A dip in India's growth rate from 5.4% to -2.6% is quite significant. Let's look at another conflict and see what we find.<br><br>Please select the 'Indo-Pakistani War of 1971' from the drop-down menu."></div>
       </div>
     </div>
 
@@ -79,10 +77,12 @@ Let's begin by selecting the 'Indo-Pakistani War of 1965' from the drop-down men
 
     <div id="map" data-step="2" data-intro="Here we see India and Pakistan, two neighbors who have fought numerous times. With a combined population of 1.4 million and both armed with nuclear weapons, the consequences of all-out war could be disastrous.<br><br>If you don't see Pakistan and India, hit the 'Back' button below and select the 'Indo-Pakistani War of 1965' from the drop-down menu."></div>
 
+    <div id="outer" data-step="7" data-intro="This blah blah">
     <div id="parcoord" data-step="4" data-intro="This parallel coordinates chart allows us to compare multiple economic factors simultaneously. In this case, we are interested in any insights this data can give us into India's repeated warring with its neighbor Pakistan.<br><br>Explore the data, move the axes around to more easily compare particular economic factors. You can also filter the data and isolate individual data points by clicking and dragging along one of the vertical axes.<br><br>See how erratic the growth of the Indian economy (GDP % Growth) is around the time of the war? That's interesting. Let's look at this a bit more closely."></div>
+  </div>
 
     <div id="table" data-step="5" data-intro="Here we see the actual values of the chart above. Note how by mousing-over a row in the table, it highlights the corresponding line in the chart.">
-      <table id="detail-table">
+      <table id="detail-table" data-step="8" data-intro="Here is more blah blah">
         <thead>
           <tr>
             <th class="col-0">Country</th>
